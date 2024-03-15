@@ -1,8 +1,9 @@
 # SellyEvi | E-commerce APP
 ***FICTIONAL APP***
+
 Selly Evi is an e-commerce app. With a wide range of products, intuitive user interface, and secure payment system, Selly Evi offers a seamless shopping experience like no other.
 
-**COMING SOON**
+**COMING SOON!**
 
 ## Why Choose Selly Evi?
 
@@ -17,8 +18,6 @@ Selly Evi is not just another e-commerce platform. It's a comprehensive solution
 - **Personalized Recommendations**: Discover new products tailored to your preferences with our personalized recommendation system. Say goodbye to endless scrolling and find exactly what you need in no time.
 
 - **Fast and Reliable Delivery**: Experience lightning-fast delivery with Selly Evi. We partner with trusted logistics providers to ensure that your orders reach you on time, every time.
-
-## Features
 
 ### API Features
 
@@ -36,8 +35,6 @@ Selly Evi is not just another e-commerce platform. It's a comprehensive solution
 
 
 ## Start Shopping with Selly Evi Today!
-
----
 
 For more detailed information, refer to their README files:
 - [Server-Side README](./sellyEvi_SERVER/README.md)
