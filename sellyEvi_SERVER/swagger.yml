@@ -1,0 +1,258 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Selly Evi | E-commerce API
+  description: API documentation for Selly Evi, an E-commerce API
+  contact:
+    name: TYNIP | Arturo Morales
+    url: https://artmoram.com/
+basePath: /
+servers: /
+tags:
+  - name: Authentication
+    description: Operations related to user authentication
+  - name: Carts
+    description: Operations related to user shopping carts
+  - name: Orders
+    description: Operations related to user orders
+  - name: Products
+    description: Operations related to products
+  - name: Users
+    description: Operations related to user management
+paths:
+  /auth/register:
+    get:
+      tags:
+        - Authentication
+      summary: Sign up user
+      responses:
+        '200':
+          description: User signed up successfully
+  /auth/login:
+    get:
+      tags:
+        - Authentication
+      summary: Log in user
+      responses:
+        '200':
+          description: User logged in successfully
+  /carts/cart:
+    get:
+      tags:
+        - Carts
+      summary: Get user cart
+      responses:
+        '200':
+          description: User cart retrieved successfully
+    put:
+      tags:
+        - Carts
+      summary: Update user cart
+      responses:
+        '200':
+          description: User cart updated successfully
+    post:
+      tags:
+        - Carts
+      summary: Create user cart
+      responses:
+        '200':
+          description: User cart created successfully
+  /carts/cart/items:
+    post:
+      tags:
+        - Carts
+      summary: Add item to user cart
+      responses:
+        '200':
+          description: Item added to user cart successfully
+  /carts/cart/items/{cartItemId}:
+    put:
+      tags:
+        - Carts
+      summary: Update item from user cart
+      parameters:
+        - name: cartItemId
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Item updated in user cart successfully
+    delete:
+      tags:
+        - Carts
+      summary: Delete item from user cart
+      parameters:
+        - name: cartItemId
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Item deleted from user cart successfully
+  /carts/cart/checkout:
+    post:
+      tags:
+        - Carts
+      summary: Checkout user cart
+      responses:
+        '200':
+          description: User cart checked out successfully
+  /orders:
+    get:
+      tags:
+        - Orders
+      summary: Get user orders
+      responses:
+        '200':
+          description: User orders retrieved successfully
+  /orders/{orderId}:
+    get:
+      tags:
+        - Orders
+      summary: Find user order
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: User order found successfully
+  /products:
+    get:
+      tags:
+        - Products
+      summary: Get user products
+      responses:
+        '200':
+          description: User products retrieved successfully
+  /products/{productId}:
+    get:
+      tags:
+        - Products
+      summary: Find user product
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: User product found successfully
+  /users/{userId}:
+    get:
+      tags:
+        - Users
+      summary: Get user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: User retrieved successfully
+    put:
+      tags:
+        - Users
+      summary: Update user info
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: User info updated successfully
+definitions:
+  CartItem:
+    type: object
+    properties:
+      id:
+        type: integer
+      product_id:
+        type: integer
+      cart_id:
+        type: integer
+      quantity:
+        type: integer
+  Cart:
+    type: object
+    properties:
+      id:
+        type: integer
+      created:
+        type: string
+        format: date-time
+      modified:
+        type: string
+        format: date-time
+      converted:
+        type: string
+        format: date-time
+      isActive:
+        type: boolean
+  OrderItem:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: integer
+      created:
+        type: string
+        format: date-time
+      modified:
+        type: string
+        format: date-time
+  Order:
+    type: object
+    properties:
+      id:
+        type: integer
+      created:
+        type: string
+        format: date-time
+      modified:
+        type: string
+        format: date-time
+      status:
+        type: string
+      total:
+        type: number
+      user_id:
+        type: integer
+  Product:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      price:
+        type: number
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      email:
+        type: string
+      password:
+        type: string
+      created:
+        type: string
+        format: date-time
+      modified:
+        type: string
+        format: date-time
