@@ -32,7 +32,7 @@ module.exports = class CartService {
         };
     };
 
-    //Load user cart based on it id and create a cart item
+    //Load user cart based on its id and create a cart item
     async addItem(userId, item){
         try{
             const cart = await CartModel.findOneByUserId(userId);

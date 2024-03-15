@@ -1,6 +1,7 @@
 # SellyEvi | E-commerce APP
 
-## Server Side
+---
 
-## Client Side
-Under development
+For more detailed information, refer to their README files:
+- [Server-Side README](./sellyEvi_SERVER/README.md)
+- [Client-Side README](./sellyEvi_CLIENT/README.md)
