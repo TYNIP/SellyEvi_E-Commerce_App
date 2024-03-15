@@ -1,7 +1,7 @@
 # SERVER - SellyEvi | E-commerce APP
 API that serves the backend and function for the Selly Evi e-commerce application.
 
-[DB ERD](./resources/ERD_SELLY_EVI.png)
+[CLIENT - SellyEvi](../sellyEvi_CLIENT/README.md)
 
 ## API Structure
 
@@ -14,7 +14,7 @@ The API follows a modular structure, with each component responsible for a speci
 - **models folder**: Interacts with the PostgreSQL database and performs CRUD operations.
 
 ## Data Base ERD
-![Selly Evi ERD](path/to/your/image.png)
+![DB ERD](./resources/ERD_SELLY_EVI.png)
 
 ## Endpoint | Paths
 
