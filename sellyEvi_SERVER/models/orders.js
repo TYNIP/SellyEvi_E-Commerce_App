@@ -1,7 +1,7 @@
 const db = require('../db/index');
 const { DateTime } = require('luxon');
 const pgp = require('pg-promise')({capSQL: true});
-const OrderItem = require('./orderItem');
+const OrderItem = require('./order_items');
 
 /* Model for orders table */
 

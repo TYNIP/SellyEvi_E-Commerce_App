@@ -1,12 +1,11 @@
-const swaggerui = require('swagger-ui-express');
-const yaml = require('yaml');
+const swaggerUi = require('swagger-ui-express');
+const yaml = require('js-yaml');
 const fs = require('fs');
 const path = require('path');
 
 /* DOC SERVER PATH */
+const swaggerDocument = yaml.load(fs.readFileSync(path.resolve(__dirname, '../swagger.yml'), 'utf8'));
 
-const swaggerDocument = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../swagger.yml'), 'utf8'));
-
-module.exports = (app) =>{
-    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-};
+module.exports = (app) => {
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+}

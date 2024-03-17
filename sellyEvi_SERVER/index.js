@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 // CONNECTIONS
-const loaders = require('./loaders');
+const loaders = require('./loaders/index');
 const {PORT} = require('./config');
 
 //Server

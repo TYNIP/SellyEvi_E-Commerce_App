@@ -16,6 +16,7 @@ module.exports = class AuthService {
             } else {
                 return await UserModelInstance.create(data);
             };
+            
         } catch(err){
             throw createError(500, err);
         };

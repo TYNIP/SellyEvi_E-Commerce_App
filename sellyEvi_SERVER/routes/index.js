@@ -6,7 +6,7 @@ const userRouter = require('./user');
 
 /* Connected/used in loaders including props*/
 
-module.exports= (data, passport){
+module.exports= (data, passport) => {
     authRouter(data, passport);
     cartRouter(data);
     orderRouter(data);

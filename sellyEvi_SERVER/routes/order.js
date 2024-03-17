@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.router();
+const router = express.Router();
 const OrderService = require('../services/OrderService');
 const OrderServiceInstance = new OrderService();
 
