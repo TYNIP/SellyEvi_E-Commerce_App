@@ -1,0 +1,13 @@
+#homepage{
+    display: flex;
+    justify-content: center;
+}
+#welcome{
+    max-width: 1000px;
+    background-color: #eeee3a;
+    padding: 2% 5%;
+    margin: 2%;
+}
+#welcome h2{
+    font-size: 5rem;
+}

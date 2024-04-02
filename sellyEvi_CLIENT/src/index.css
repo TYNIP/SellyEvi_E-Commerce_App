@@ -1,0 +1,92 @@
+/* SCROLL BAR */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgb(20, 19, 19);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #84818166, #bbbab949);
+}
+
+:root{
+  --size1:3rem;
+  --size2: 1rem;
+}
+
+/* UNIVERSAL STYLING */
+
+*{
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+html{
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden !important;
+}
+body{
+    font-family:'Times New Roman', Times, serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden !important;
+}
+main {
+  padding-top: 80px; 
+}
+
+@media only screen and (max-width: 300px) {
+  main {
+    padding-top: 120px; 
+  }
+}
+
+button, a, .link, i{
+  cursor: pointer;
+}
+
+.link{
+  color:#0071E2;
+  font-size: 1.1rem;
+}
+.link:hover{
+  border-bottom: 1px solid #0071E2;
+}
+
+/* Loader */
+.loader {
+  display: block;
+  --height-of-loader: 4px;
+  --loader-color: #0071e2;
+  width: 130px;
+  height: var(--height-of-loader);
+  border-radius: 30px;
+  background-color: rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  background: var(--loader-color);
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  border-radius: 30px;
+  animation: moving 1s ease-in-out infinite;
+  ;
+}
+
+@keyframes moving {
+  50% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+    right: 0;
+    left: unset;
+  }
+}

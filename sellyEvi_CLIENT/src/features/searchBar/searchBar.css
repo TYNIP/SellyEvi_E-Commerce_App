@@ -1,0 +1,22 @@
+#search{
+    background-color: white;
+    padding: 20px;
+    border-radius: 50px;
+}
+#search button, #search input{
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+}
+#search input{
+    width: 80%;
+    height: 100% + 20px;
+}
+#search button{
+    cursor: pointer;
+    width: 20%;
+    height: 100% + 20px;
+}
+#search button:hover{
+    color: #8f8f32;
+}
