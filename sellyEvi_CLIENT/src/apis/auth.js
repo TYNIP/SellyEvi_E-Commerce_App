@@ -1,21 +1,37 @@
-import {API_URL} from './functions';
+import API from './client';
 
-export const loginUser = async (email, password) => {
-    try {
-      const response = await fetch(`${API_URL}/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      if (!response.ok) {
-        throw new Error('Failed to login');
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
-  
+// logging a user in
+export const login = async (credentials) => {
+  try {
+    const response = await API.post('auth/login', credentials);
+
+    return response.data;
+
+  } catch (err) {
+    throw err.response.data;
+  }
+}
+
+// registering a user
+export const register = async (data) => {
+  try {
+    const response = await API.post('auth/register', data);
+
+    return response.data;
+
+  } catch(err) {
+    throw err.response.data;
+  }
+}
+
+// verifying the logged in status of a user
+export const isLoggedIn = async () => {
+  try {
+    const response = await API.get('auth/logged_in');
+
+    return response.data;
+
+  } catch(err) {
+    throw err.response.data;
+  }
+}

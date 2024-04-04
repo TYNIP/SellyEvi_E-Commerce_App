@@ -7,6 +7,7 @@ import ProductPage from '../pages/products/ProductPage';
 import ProductDetailsPage from '../pages/Productdetails/ProductDetailsPage';
 import SearchPage from '../pages/search/SearchPage';
 import Login from '../pages/Login/Login';
+import Register from '../pages/Register/Register';
 import ErrorPage from '../pages/notFound/Error'
 
 /* SCROLL */
@@ -41,6 +42,7 @@ function App() {
       <Route path="products/:id/:productname" element={<ProductDetailsPage/>}/>
       <Route path="products/search" element={<SearchPage/>}/>
       <Route path="login" element={<Login/>}/>
+      <Route path="register" element={<Register/>}/>
 
       {/* FAIL */}
       <Route path='*' element={<ErrorPage/>} />

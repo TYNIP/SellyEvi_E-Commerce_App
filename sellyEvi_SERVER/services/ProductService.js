@@ -41,7 +41,6 @@ module.exports = class ProductService {
     //get product from search
     async getSearch(search){
         try{
-            console.log('yoo2', search)
             const product = await ProductModelInstance.findProducts(search);
             if(!product){
                 throw createError(404, 'Product not found');

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {API_URL} from '../../apis/functions';
 
+/* FUNCTIONS */
 export const fetchProductById = createAsyncThunk(
   'product/fetchProductById',
   async (id) => {
@@ -24,6 +25,7 @@ export const fetchProductSearch = createAsyncThunk(
   }
 );
 
+/* SLICE */
 const productIdSlice = createSlice({
   name: 'productId',
   initialState: {

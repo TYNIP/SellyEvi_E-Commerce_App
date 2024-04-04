@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
+import './register.css';
 
-import './Login.css';
-
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,7 +17,7 @@ const Login = () => {
   };
 
   return (
-    <div id='logIn'>
+    <div id='register'>
       <form className="form" onSubmit={handleLogin}>
         <div className="flex-column">
           <label>Email </label>
@@ -63,13 +62,11 @@ const Login = () => {
           </div>
         </div>
         <button type="submit" className="button-submit">
-          Sign In
+          Sign Up
         </button>
-
         <p className="p">
-          Don't have an account? <Link to='/register'><span className="span">Sign Up</span></Link>
+          Already have an account? <Link to='/login'><span className="span">Sign In</span></Link>
         </p>
-
         <p className="p line">Or With</p>
 
         <div className="flex-row">
@@ -81,4 +78,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

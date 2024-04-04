@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {API_URL} from '../../apis/functions';
 
+/* FUNCTIONS */
 export const fetchAllProduct = createAsyncThunk(
   'product/fetchAllProduct',
   async () => {
@@ -37,6 +38,8 @@ export const fetchOldestProducts = createAsyncThunk(
     return data;
   }
 );
+
+/* SLICE */
 
 const productSlice = createSlice({
   name: 'product',

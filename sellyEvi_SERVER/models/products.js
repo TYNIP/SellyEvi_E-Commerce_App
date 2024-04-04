@@ -64,7 +64,6 @@ module.exports = class ProductModel {
                       OR description LIKE '%' || $1 || '%';`;
                       const queryParams = [search];
                       const result = await db.query(statement, queryParams);
-                      console.log(result.rows?.length);
             if(result.rows?.length){
                 return result.rows;
             } else {

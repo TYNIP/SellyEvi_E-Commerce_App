@@ -34,9 +34,7 @@ module.exports = (app) =>{
     router.get('/search/:search', async (req, res, next) => {
         try {
             const searchTerm = req.params.search.toLowerCase();
-            console.log("Received search term:", searchTerm);
             const response = await ProductServiceInstance.getSearch(searchTerm);
-            console.log(response);
             res.status(200).send(response);
         } catch (err) {
             next(err);
