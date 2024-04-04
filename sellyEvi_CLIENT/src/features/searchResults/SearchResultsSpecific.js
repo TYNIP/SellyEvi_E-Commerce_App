@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {Link, useLocation} from 'react-router-dom';
-import { selectProduct, selectLoading, selectError, fetchAllProduct, fetchLatestProducts, fetchOldestProducts} from '../../store/product/productSliceGeneral';
+import { selectProductId, selectLoadingId, selectErrorId} from '../../store/product/productSliceSpecific';
 import {convertImageBufferToUrl} from '../../apis/functions';
 import './searchResults.css';
 
 // Import statements
 
-const SearchResults = ({isLatest, isOldest, isAll}) => {
-  const products = useSelector(selectProduct);
-  const dispatch = useDispatch();
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
+const SearchResultsSpecific = () => {
+  const products = useSelector(selectProductId);
+  const loading = useSelector(selectLoadingId);
+  const error = useSelector(selectErrorId);
   const [imageUrls, setImageUrls] = useState([]);
 
   useEffect(() => {
@@ -27,22 +26,10 @@ const SearchResults = ({isLatest, isOldest, isAll}) => {
     fetchImageUrls();
   }, [products]);
 
-  useEffect(()=>{
-    if(isLatest === true){
-      dispatch(fetchLatestProducts());
-    }
-    if(isOldest === true){
-      dispatch(fetchOldestProducts());
-    }
-    if(isAll === true){
-      dispatch(fetchAllProduct());
-    }
-  },[dispatch]);
-
   return (
     <div id="results">
       {/* Loading indicator */}
-      {loading && (
+      {loading &&(
         <ul style={{ width: '100%', textAlign: 'center' }} className="wave-menu">
           {[...Array(10)].map((_, index) => (
             <li key={index}></li>
@@ -55,6 +42,7 @@ const SearchResults = ({isLatest, isOldest, isAll}) => {
 
       {/* Render products */}
       {Array.isArray(products) && products.map((product, index) => (
+        <>
         <Link to={`/products/${product.id}/${product.name}`} key={index}>
           <div className='post'>
             <div className='imgContainer'>
@@ -70,9 +58,10 @@ const SearchResults = ({isLatest, isOldest, isAll}) => {
             </button>
           </div>
         </Link>
+        </>
       ))}
     </div>
   );
 };
 
-export default SearchResults;
+export default SearchResultsSpecific;

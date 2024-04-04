@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {API_URL} from '../../apis/functions';
 
-export const fetchProduct = createAsyncThunk(
-  'product/fetchProduct',
-  async (searchTerm) => {
-    const response = await fetch(`https://sellyEviApi.artmoram.com/products?search=${searchTerm}`);
+export const fetchAllProduct = createAsyncThunk(
+  'product/fetchAllProduct',
+  async () => {
+    const response = await fetch(`${API_URL}/products`);
     if (!response.ok) {
       throw new Error('Failed to fetch product');
     }
@@ -15,19 +16,20 @@ export const fetchProduct = createAsyncThunk(
 export const fetchLatestProducts = createAsyncThunk(
   'product/fetchLatestProducts',
   async () => {
-    const response = await fetch('https://sellyEviApi.artmoram.com/latest-products');
+    const response = await fetch(`${API_URL}/products`);
     if (!response.ok) {
       throw new Error('Failed to fetch latest products');
     }
     const data = await response.json();
-    return data;
+    const latestProducts = data.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate)).slice(0, 4);
+    return latestProducts;
   }
 );
 
 export const fetchOldestProducts = createAsyncThunk(
   'product/fetchOldestProducts',
   async () => {
-    const response = await fetch('https://sellyEviApi.artmoram.com/oldest-products');
+    const response = await fetch(`${API_URL}`);
     if (!response.ok) {
       throw new Error('Failed to fetch oldest products');
     }
@@ -46,18 +48,20 @@ const productSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProduct.pending, (state) => {
+      /* all products */
+      .addCase(fetchAllProduct.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchProduct.fulfilled, (state, action) => {
+      .addCase(fetchAllProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.product = action.payload;
       })
-      .addCase(fetchProduct.rejected, (state, action) => {
+      .addCase(fetchAllProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
+      /* Fetch latest */
       .addCase(fetchLatestProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -70,6 +74,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      /* Fetch oldest */
       .addCase(fetchOldestProducts.pending, (state) => {
         state.loading = true;
         state.error = null;

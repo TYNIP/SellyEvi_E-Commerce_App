@@ -41,4 +41,32 @@ module.exports = class AuthService {
             throw createError(500, err);
         };
     };
+
+    //google log in
+    async googleLogin(profile){
+        const {id, displayName} = profile;
+        try{
+            const user = await UserModelInstance.findOneByGoogleId(id);
+            if(!user){
+                return await UserModelInstance.create({google: {id, displayName}});
+            } else {
+                return user;
+            }
+        } catch(err){
+            throw createError(500, err);
+        }
+    };
+    //facebook login
+    async facebookLogin(profile) {
+        const { id, displayName } = profile;
+        try {
+          const user = await UserModelInstance.findOneByFacebookId(id);
+          if (!user) {
+            return await UserModelInstance.create({ facebook: { id, displayName } });
+          }
+          return user;
+        } catch(err) {
+          throw createError(500, err);
+        }
+    };
 };

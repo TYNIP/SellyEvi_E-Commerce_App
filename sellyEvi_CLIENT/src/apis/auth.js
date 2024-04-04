@@ -1,6 +1,8 @@
+import {API_URL} from './functions';
+
 export const loginUser = async (email, password) => {
     try {
-      const response = await fetch('https://sellyEviApi.artmoram.com/login', {
+      const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

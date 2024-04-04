@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {Link} from 'react-router-dom';
-import { fetchLatestProducts, fetchOldestProducts } from '../../store/product/productSlice';
+import { fetchLatestProducts, fetchOldestProducts, fetchAllProduct } from '../../store/product/productSliceGeneral';
 import './sidebar.css';
 
 const Sidebar = ({ userName, sideBar }) => {
@@ -18,6 +18,10 @@ const Sidebar = ({ userName, sideBar }) => {
       setGreeting('Good night!');
     }
   }, []);
+  const handleAllProducts = () => {
+    dispatch(fetchAllProduct());
+    sideBar();
+  };
 
   const handleLatestProducts = () => {
     dispatch(fetchLatestProducts());
@@ -34,16 +38,19 @@ const Sidebar = ({ userName, sideBar }) => {
 
     <div id="sidebar">
         <i className="fas fa fa-redo fa-fw" onClick={sideBar}></i>
+      <div id='fixSideBar'>
       <div id='insideBar'>
         <p>{greeting} <br/> {userName ? `Welcome back ${userName}` : 'Welcome Stranger'}</p>
         {!userName && (<Link to='/login' onClick={sideBar}><span className='link'>Log In</span></Link>)}
         <h1>SellyEvi</h1>
-        <button onClick={handleLatestProducts}>Latest Products</button>
-        <button onClick={handleOldestProducts}>Oldest Products</button>
+        <Link to='/products'><button onClick={handleAllProducts}>All Products</button></Link>
+        <Link to='/products'><button onClick={handleLatestProducts}>Latest Products</button></Link>
+        <Link to='/products'><button onClick={handleOldestProducts}>Oldest Products</button></Link>
+      </div>
       </div>
     </div>
 
-    <div id='darkness' onClick={sideBar}>hello</div>
+    <div id='darkness' onClick={sideBar}></div>
 
     </section>
   );

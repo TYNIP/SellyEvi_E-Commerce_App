@@ -1,5 +1,6 @@
 const OrderModel = require('../models/orders');
 const OrderItemModel = require('../models/order_items');
+const OrderItemModelInstance = new OrderItemModel;
 
 /* SERVICE - ORDER */
 
@@ -21,7 +22,7 @@ module.exports = class OrderService{
     //Load/list user orders by user Id
     async list(userId){
         try {
-            const orders = await OrderModel.findByUser(userId);
+            const orders = await OrderItemModelInstance.findByUser(userId);
             return orders;
 
         }catch(err){
@@ -32,7 +33,7 @@ module.exports = class OrderService{
     //Load user orders by orer id
     async findById(orderId){
         try{
-            const order = await OrderModel.findById(orderId);
+            const order = await OrderItemModelInstance.findById(orderId);
             return order;
 
         } catch(err){

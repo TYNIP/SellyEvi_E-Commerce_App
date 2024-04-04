@@ -23,8 +23,8 @@ The API follows a modular structure, with each component responsible for a speci
 #### /auth/____
 | Paths                 | HTTP Verb | Purpose                        |
 |-----------------------|-----------|--------------------------------|
-| /register             | GET       | Sign up user                   |
-| /login                | GET       | Log in user                    |
+| /register             | POST       | Sign up user                   |
+| /login                | POST       | Log in user                    |
 
 #### /carts/____
 | Paths                   | HTTP Verb | Purpose                        |

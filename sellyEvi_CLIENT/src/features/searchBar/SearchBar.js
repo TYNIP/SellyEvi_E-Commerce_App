@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchProduct } from '../../store/product/productSlice';
+import {useNavigate} from 'react-router-dom';
+import { fetchProductSearch } from '../../store/product/productSliceSpecific';
 import './searchBar.css';
 
 const SearchBar = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const dispatch = useDispatch();
 
   const handleSearch = () => {
     if (searchTerm.trim() !== '') {
-      dispatch(fetchProduct(searchTerm));
+      navigate(`/products/search`);
+      dispatch(fetchProductSearch(searchTerm));
     }
   };
 

@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
+import { useDispatch, useSelector} from 'react-redux';
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, Navigate, useLocation} from 'react-router-dom';
 import AppLayout from './AppLayout';
 import HomePage from '../pages/home/HomePage';
+import ProductPage from '../pages/products/ProductPage';
+import ProductDetailsPage from '../pages/Productdetails/ProductDetailsPage';
+import SearchPage from '../pages/search/SearchPage';
 import Login from '../pages/Login/Login';
-import ErrorPage from '../pages/notFound/Error';
-
+import ErrorPage from '../pages/notFound/Error'
 
 /* SCROLL */
 function ScrollToTop() {
@@ -33,7 +36,10 @@ function App() {
       {/* ROUTES */}
 
       <Route index element={ <Navigate to="/home"/> }/>
-      <Route path="home" element={<HomePage/>}/>
+      <Route path="home" element={<HomePage />}/>
+      <Route path="products" element={<ProductPage/>}/>
+      <Route path="products/:id/:productname" element={<ProductDetailsPage/>}/>
+      <Route path="products/search" element={<SearchPage/>}/>
       <Route path="login" element={<Login/>}/>
 
       {/* FAIL */}

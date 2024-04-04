@@ -7,7 +7,6 @@ import Footer from '../components/footer/Footer';
 
 export default function AppLayout() {
     const [isSideBar, setSideBar] = useState(false);
-
     /* NAVIGATION */
     const sideBar = () => {
         setSideBar(!isSideBar);

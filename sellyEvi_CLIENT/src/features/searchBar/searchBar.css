@@ -1,7 +1,14 @@
+#NormalSearchBar{
+    padding: 2% 10%;
+    display: flex;
+    justify-content: center;   
+}
 #search{
     background-color: white;
     padding: 20px;
     border-radius: 50px;
+    border: 1px solid rgba(0,0,0,0.5);
+    width: 100%;
 }
 #search button, #search input{
     background-color: transparent;
