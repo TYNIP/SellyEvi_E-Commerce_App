@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector} from 'react-redux';
+import React, {useEffect} from 'react';
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, Navigate, useLocation} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import AppLayout from './AppLayout';
 import HomePage from '../pages/home/HomePage';
 import ProductPage from '../pages/products/ProductPage';
@@ -9,6 +10,15 @@ import SearchPage from '../pages/search/SearchPage';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import ErrorPage from '../pages/notFound/Error'
+
+import Orders from '../pages/Orders/Orders';
+
+import Account from '../pages/Account/Account';
+import Cart from '../pages/Cart/Cart';
+import Checkout from '../pages/Checkout/Checkout';/*  */
+import OrderDetails from '../pages/Orderdetails/OrderDetails';
+
+import { checkLoginStatus } from '../store/auth/authSlice';
 
 /* SCROLL */
 function ScrollToTop() {
@@ -19,23 +29,33 @@ function ScrollToTop() {
   }, [location.pathname]);
 
   return null;
+
 }
 
-
+/* APP */
 function App() {
+
+  const { isAuthenticated } = useSelector(state => state.auth);
+  /* let user = checkLoginStatus(); */
+  const dispatch = useDispatch();
+  useEffect(() => {
+    async function isLoggedIn() {
+      await dispatch(checkLoginStatus());
+    }
+    isLoggedIn();
+  }, [dispatch]);
+
   /* ROUTER */
   const router = createBrowserRouter(createRoutesFromElements(
     <>
-
     <Route path='/' element={
       <>
       <ScrollToTop />
-      <AppLayout/>
+      <AppLayout isAuthen={isAuthenticated}/>
       </>
     }>
 
-      {/* ROUTES */}
-
+      {/* PUBLIC ROUTES */}
       <Route index element={ <Navigate to="/home"/> }/>
       <Route path="home" element={<HomePage />}/>
       <Route path="products" element={<ProductPage/>}/>
@@ -43,9 +63,18 @@ function App() {
       <Route path="products/search" element={<SearchPage/>}/>
       <Route path="login" element={<Login/>}/>
       <Route path="register" element={<Register/>}/>
+      <Route path="orders" element={<Orders/>}/>
+      
+      {/* PRIVATE ROUTES */}
+      <Route exact path='/account' element={isAuthenticated? <Account/> : <Navigate to="/login"/>}/>
+      <Route exact path='/cart' element={isAuthenticated? <Cart/> : <Navigate to="/login"/>}/>
+      <Route exact path='/checkout' element={isAuthenticated? <Checkout/> : <Navigate to="/login"/>}/>
+      <Route exact path='/orders' element={isAuthenticated? <Orders/> : <Navigate to="/login"/>}/>
+      <Route exact path='/orders/:orderId' element={isAuthenticated? <OrderDetails/> : <Navigate to="/login"/>}/>
 
       {/* FAIL */}
       <Route path='*' element={<ErrorPage/>} />
+
     </Route>
      </>
   )

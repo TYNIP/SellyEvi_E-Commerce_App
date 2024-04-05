@@ -12,8 +12,8 @@ export default function Header({sideBar}){
             <h1>SellyEvi</h1>
         </Link>
         <div className="headerActions">
-            <i className="fas fa fa-user-circle fa-fw" ></i>
-            <i className="fas fa fa-shopping-cart fa-fw" ></i>
+            <Link to='/account'><i className="fas fa fa-user-circle fa-fw" ></i></Link>
+            <Link to='/orders'><i className="fas fa fa-shopping-cart fa-fw" ></i></Link>
         </div>
     </div>
     );

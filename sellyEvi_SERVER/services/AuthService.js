@@ -50,6 +50,7 @@ module.exports = class AuthService {
             if(!user){
                 return await UserModelInstance.create({google: {id, displayName}});
             } else {
+                console.log(user);
                 return user;
             }
         } catch(err){
@@ -64,6 +65,7 @@ module.exports = class AuthService {
           if (!user) {
             return await UserModelInstance.create({ facebook: { id, displayName } });
           }
+          console.log(user);
           return user;
         } catch(err) {
           throw createError(500, err);

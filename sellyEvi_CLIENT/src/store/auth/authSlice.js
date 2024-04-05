@@ -82,4 +82,5 @@ const initialState = {
   });
   
   // Export reducer
+  export const selectError = (state) => state.auth.error;
   export default authSlice.reducer;

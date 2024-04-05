@@ -72,6 +72,16 @@ button, a, .link, i{
 .link:hover{
   border-bottom: 1px solid #0071E2;
 }
+.error{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5576c;
+}
+.error p{
+  color: white;
+  font-weight: bold;
+}
 /* cart btn */
 .btn {
   width: 80%;

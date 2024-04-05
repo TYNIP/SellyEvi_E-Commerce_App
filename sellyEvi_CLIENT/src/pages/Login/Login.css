@@ -24,23 +24,28 @@
   .form button {
     align-self: flex-end;
   }
-  
+  .flex-column{
+    margin: 15px 0;
+  }
   .flex-column > label {
     color: #151717;
     font-weight: 600;
   }
   
-  .inputForm {
-    border: 1.5px solid #ecedec;
-    border-radius: 10px;
-    height: 50px;
+.inputForm {
     display: flex;
     align-items: center;
-    padding-left: 10px;
-    transition: 0.2s ease-in-out;
+    justify-content: center;
+  }
+
+  .inputForm *{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
   }
   
-  .input {
+  .form .input {
     margin-left: 10px;
     border-radius: 10px;
     border: none;
@@ -50,10 +55,6 @@
   
   .input:focus {
     outline: none;
-  }
-  
-  .inputForm:focus-within {
-    border: 1.5px solid #2d79f3;
   }
   
   .flex-row {
@@ -79,20 +80,20 @@
   }
   
   .button-submit {
-    margin: 20px 0 10px 0;
-    background-color: #151717;
-    border: none;
-    color: white;
-    font-size: 15px;
-    font-weight: 500;
-    border-radius: 10px;
-    height: 50px;
-    width: 100%;
+    margin: 20px 0 10px 0 !important;
+    background-color: #151717 !important;
+    border: none !important;
+    color: white !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    border-radius: 10px !important;
+    height: 50px !important;
+    width: 100% !important;
     cursor: pointer;
   }
   
   .button-submit:hover {
-    background-color: #252727;
+    background-color: #373939 !important;
   }
   
   .p {

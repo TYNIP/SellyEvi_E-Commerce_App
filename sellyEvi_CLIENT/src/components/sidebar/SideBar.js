@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import { fetchLatestProducts, fetchOldestProducts, fetchAllProduct } from '../../store/product/productSliceGeneral';
 import './sidebar.css';
 
-const Sidebar = ({ userName, sideBar }) => {
+const Sidebar = ({ userName , isAuthen, sideBar }) => {
   const dispatch = useDispatch();
   const [greeting, setGreeting] = useState('');
 
@@ -32,7 +32,7 @@ const Sidebar = ({ userName, sideBar }) => {
     dispatch(fetchOldestProducts());
     sideBar();
   };
-
+  console.log(isAuthen);
   return (
     <section id='sidePage'>
 
@@ -40,8 +40,8 @@ const Sidebar = ({ userName, sideBar }) => {
         <i className="fas fa fa-redo fa-fw" onClick={sideBar}></i>
       <div id='fixSideBar'>
       <div id='insideBar'>
-        <p>{greeting} <br/> {userName ? `Welcome back ${userName}` : 'Welcome Stranger'}</p>
-        {!userName && (<Link to='/login' onClick={sideBar}><span className='link'>Log In</span></Link>)}
+        <p>{greeting} <br/> {isAuthen? `Welcome back ${userName}` : 'Welcome Stranger'}</p>
+        {!isAuthen && (<Link to='/login' onClick={sideBar}><span className='link'>Log In</span></Link>)}
         <h1>SellyEvi</h1>
         <Link to='/products'><button onClick={handleAllProducts}>All Products</button></Link>
         <Link to='/products'><button onClick={handleLatestProducts}>Latest Products</button></Link>
