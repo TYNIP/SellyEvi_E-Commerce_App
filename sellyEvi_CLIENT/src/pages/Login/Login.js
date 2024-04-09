@@ -6,8 +6,9 @@ import * as Yup from 'yup';
 import Button from '../../components/button/Button';
 import Divider from '@mui/material/Divider';
 import TextField from '../../components/TextField/TextField';
-import { loginUser, selectError } from '../../store/auth/authSlice';
+import { loginUser, selectError, loginWithGoogleUser } from '../../store/auth/authSlice';
 import './Login.css';
+import {API_URL} from '../../apis/functions';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Login = () => {
   const error = useSelector(selectError);
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState(false);
+  const [counter, setCounter] = useState(0);
 
   /* HANDLER */
   const handleLogin = async (credentials) => {
@@ -23,13 +25,29 @@ const Login = () => {
       await dispatch(loginUser(credentials));
       setIsLoading(false);
       setErr(false);
-      navigate('/');
+      navigate('/home')
     } catch(err) {
       setIsLoading(false);
       setErr(true);
     }
   }
 
+  const handleLoginWithGoogle = async () => {
+    setIsLoading(true);
+    try {
+      await dispatch(loginWithGoogleUser());
+      setIsLoading(false);
+      setErr(false);
+      navigate('/home');
+    } catch (err) {
+      setIsLoading(false);
+      setErr(true);
+      setCounter(counter + 1);
+      if(counter > 3){alert('Something is wrong in the connection. Please log in manually or try again later.')}
+    }
+  };
+
+  /* SCHEMA */
   const loginSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email address")
@@ -96,9 +114,8 @@ const Login = () => {
             </p>
             <p className="p line">Or With</p>
 
-            <div className="flex-row">
-              <Button variant="contained" className="btn apple" href="/auth/facebook">Facebook</Button>
-              <Button variant="contained" className="btn google" href="/auth/google">Google</Button>
+            <div className="flex-row2">
+              <a href={`${API_URL}/auth/google`} target='_blank' rel="noreferrer"><Button variant="contained" className="btn google" onClick={handleLoginWithGoogle} isLoading={isLoading}>Google</Button></a>
             </div>
           </Form>
         </Formik>

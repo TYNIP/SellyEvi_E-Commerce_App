@@ -1,8 +1,21 @@
 import {React} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import './header.css';
+import {logoutUser} from '../../store/auth/authSlice';
+import { useDispatch} from 'react-redux';
 
-export default function Header({sideBar}){
+
+export default function Header({sideBar, isAuthen}){
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const logout = () =>{
+        console.log('logging out');
+        dispatch(logoutUser());
+        navigate('/login');
+        navigate('/login');
+    }
+
     return(
     <div id='firstHeader'>
         <div className="headerActions">
@@ -14,6 +27,10 @@ export default function Header({sideBar}){
         <div className="headerActions">
             <Link to='/account'><i className="fas fa fa-user-circle fa-fw" ></i></Link>
             <Link to='/orders'><i className="fas fa fa-shopping-cart fa-fw" ></i></Link>
+            <div>
+                {isAuthen && (<button id='LogOutbtn' onClick={logout}>Log Out</button>)}
+                {!isAuthen && (<Link to='/login'><button id='LogOutbtn'>Log In</button></Link>)}
+            </div>
         </div>
     </div>
     );

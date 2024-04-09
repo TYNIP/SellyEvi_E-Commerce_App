@@ -1,22 +1,32 @@
 const passport = require('passport');
-const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const LocalStrategy = require('passport-local');
 const AuthService = require('../services/AuthService');
 const AuthServiceInstance = new AuthService();
-const { FACEBOOK, GOOGLE } = require('../config');
+const UserModel= require('../models/users');
+const UserModelInstance = new UserModel();
+const { GOOGLE } = require('../config');
 
 /* API AUTH MANAGEMENT */
 
 module.exports = (app)=>{
+    console.log('passport running');
     app.use(passport.initialize());
     app.use(passport.session());
 
     passport.serializeUser((user, done)=>{
         done(null, user.id);
     });
-    passport.deserializeUser((user, done)=>{
-        done(null, {id});
+
+    passport.deserializeUser(async (id, done) => {
+        try {
+            console.log('deserializing user');
+            const user = await userService.get({ id });
+            console.log(user)
+            done(null, user); 
+        } catch (err) {
+            done(err); 
+        }
     });
 
     passport.use(new LocalStrategy(
@@ -30,34 +40,24 @@ module.exports = (app)=>{
         }
     ));
 
-    /* JSWT */
-    passport.use(new GoogleStrategy({
+    passport.use("auth-google",new GoogleStrategy({
         clientID: GOOGLE.CONSUMER_KEY,
         clientSecret: GOOGLE.CONSUMER_SECRET,
         callbackURL: GOOGLE.CALLBACK_URL
     },
-    async(acccessToken, regreshToken, profile, done)=>{
+    async function(accessToken, refreshToken, profile, done) {
         try{
-            const user = await AuthServiceInstance.googleLogin(profile);
-            return done(null, user);
+            const user = await UserModelInstance.findOneByEmail(profile.emails[0].value);
+    
+            if(!user){
+                throw createError(401,'Incorrect Username or Password');
+            };
+            return user;
         } catch(err){
-            return done(err);
-        }
-    }));
-    passport.use(new FacebookStrategy({
-        clientID: FACEBOOK.CONSUMER_KEY,
-        clientSecret: FACEBOOK.CONSUMER_SECRET,
-        callbackURL: FACEBOOK.CALLBACK_URL
-      },
-      async (accessToken, refreshToken, profile, done) => {
-        try {
-          const user = await AuthServiceInstance.facebookLogin(profile);
-          return done(null, user);
-        } catch(err) {
-          return done(err);
-        }
-      }
-    ));
+            throw createError(500, err);
+        };
+      }));
 
+    console.log('passport stops');
     return passport;
 };

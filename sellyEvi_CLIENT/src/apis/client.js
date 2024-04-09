@@ -8,5 +8,4 @@ export default axios.create({
 User Example:
 art@gmail.gu
 heyo23456
-
 */

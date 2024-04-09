@@ -15,6 +15,7 @@ const Register = () => {
   const dispatch = useDispatch();
   const { error } = useSelector(state => state.auth);
   const [isLoading, setIsLoading] = useState(false);
+  const [err, setErr] = useState(false);
 
   // Registration handler
   const handleRegister = async (credentials) => {
@@ -22,9 +23,11 @@ const Register = () => {
       setIsLoading(true);
       await dispatch(registerUser(credentials));
       setIsLoading(false);
-      navigate('/');
+      setErr(false);
+      navigate('/login');
     } catch(err) {
       setIsLoading(false);
+      setErr(true);
     }
   }
 
@@ -131,9 +134,8 @@ const Register = () => {
               />
             </div>
             {/* Error */}
-              {
-                error && <div>{error}</div>
-              }
+                {err && <div className='error'><p>Email Already Registered. Sign In To Enter!</p></div>}
+              
 
               <Button type="submit" isLoading={isLoading} className="button-submit">Submit</Button>
               <Divider />
@@ -141,13 +143,6 @@ const Register = () => {
               <p className="p">
                 Already have an account? <Link to='/login'><span className="span">Sign In</span></Link>
               </p>
-              <p className="p line">Or With</p>
-
-              <div className="flex-row">
-                <Button variant="contained" className="btn apple">Facebook</Button>
-                <Button variant="contained" className="btn google">Google</Button>
-              </div>
-
             </Form>
           </Formik>
       </div>

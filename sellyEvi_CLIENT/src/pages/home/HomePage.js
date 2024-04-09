@@ -3,11 +3,11 @@ import './homepage.css';
 import SearchBar from '../../features/searchBar/SearchBar';
 import SearchResults from '../../features/searchResults/SearchResults';
 
-export default function HomePage({isLatest, isOldest, isAll}){
+export default function HomePage({userInfo}){
     return(
         <section id='homepage'>
         <div id='welcome'>
-            <h2>What are we looking today?</h2>
+            <h2>{userInfo? `What are we looking today ${userInfo.firstname}?` : `What are we looking today?`}</h2>
             <SearchBar/>
         </div>
         <div className='largeCenter'>

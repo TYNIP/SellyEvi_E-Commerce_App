@@ -11,6 +11,12 @@
     border-radius: 50px;
     padding: 2% 5%;
 }
+#results *{
+    text-decoration: none;
+}
+.info *{
+    color: black;
+}
 .post{
     display: flex;
     flex-direction: column;

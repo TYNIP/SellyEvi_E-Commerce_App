@@ -1,6 +1,3 @@
-/* * {
-    border: 1px solid green;
-} */
 #firstHeader{
     display: flex;
     justify-content: space-around;
@@ -12,6 +9,10 @@
     width: 100%;
     z-index: 10;
     background-color: white;
+}
+#firstHeader *{
+    text-decoration: none !important;
+    color: black;
 }
 #firstHeader h1{
     color: black;
@@ -30,7 +31,7 @@
 }
 
 .headerActions i:hover{
-    color:#0071E2;
+    color:#0071E2 !important;
     transition: 10ms;
 }
 
@@ -39,4 +40,15 @@
         flex-wrap: wrap;
         padding: 2%;
     }
+}
+
+#LogOutbtn{
+    background: none;
+    margin: 0 100%;
+    font-size: 1rem;
+    border: none;
+}
+#LogOutbtn:hover{
+    color:#0071E2 !important;
+    transition: 10ms;
 }

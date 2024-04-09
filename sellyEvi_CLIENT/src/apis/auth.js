@@ -29,3 +29,25 @@ export const isLoggedIn = async () => {
     throw err.response.data;
   }
 }
+
+// log Out user
+export const logout = async () => {
+  try {
+    const response = await API.post('auth/logout');
+    return response;
+  } catch (err) {
+    throw err.response.data;
+  }
+}
+
+/* THIRD PARTIES */
+// verifying the logged in status of a user
+
+export const loginWithGoogle = async () => {
+  try {
+    const response = await API.get('auth/google');
+    return response.data;
+  } catch(err) {
+    throw err.response.data;
+  }
+}

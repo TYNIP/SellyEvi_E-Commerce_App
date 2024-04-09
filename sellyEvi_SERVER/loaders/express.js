@@ -10,26 +10,29 @@ const {SESSION_SECRET} = require('../config');
 /* API MIDDLEWARE */
 
 module.exports = (app) =>{
-    app.use(cors());
-    app.use(helmet());
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({extended: true}));
-    app.use(compression());
-
+    console.log('express running')
     app.set('trust proxy', 1);
-    
-    /* CREATE USER COOKIE */
+
+    /* USER COOKIE */
     app.use(
         session({  
           secret: SESSION_SECRET,
           resave: false,
-          saveUninitialized: false,
+          saveUninitialized: true,
           cookie: {
-            secure: false,
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000
             }
         })
     );
 
+    /* Middleware */
+    app.use(cors());
+    app.use(helmet());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(compression());
+    console.log('express strops')
     return app;
 };

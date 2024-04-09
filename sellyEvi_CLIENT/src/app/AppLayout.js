@@ -5,7 +5,7 @@ import SideBar from '../components/sidebar/SideBar';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 
-export default function AppLayout({isAuthen, userName}) {
+export default function AppLayout({isAuthen, userInfo}) {
     const [isSideBar, setSideBar] = useState(false);
     /* NAVIGATION */
     const sideBar = () => {
@@ -18,9 +18,9 @@ export default function AppLayout({isAuthen, userName}) {
     <div id="top"></div>
     {/* APPLAYOUT */}
     {isSideBar && (
-        <SideBar sideBar={sideBar} isAuthen={isAuthen} userName={userName}/>
+        <SideBar sideBar={sideBar} isAuthen={isAuthen} userInfo={userInfo}/>
     )}
-    <Header sideBar={sideBar}/>
+    <Header sideBar={sideBar} isAuthen={isAuthen}/>
     <main>
         <Outlet/>
     </main>

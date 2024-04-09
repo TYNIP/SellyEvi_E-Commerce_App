@@ -8,7 +8,7 @@ const {PORT} = require('./config');
 
 //Server
 async function startServer(){
-    loaders(app);
+    await loaders(app);
 
     app.listen(PORT, ()=>{
         console.log(`Server listening on PORT ${PORT}`)

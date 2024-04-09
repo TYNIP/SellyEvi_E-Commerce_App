@@ -18,7 +18,7 @@ import Cart from '../pages/Cart/Cart';
 import Checkout from '../pages/Checkout/Checkout';/*  */
 import OrderDetails from '../pages/Orderdetails/OrderDetails';
 
-import { checkLoginStatus } from '../store/auth/authSlice';
+import { checkLoginStatus, authSelector, userSelector } from '../store/auth/authSlice';
 
 /* SCROLL */
 function ScrollToTop() {
@@ -35,9 +35,10 @@ function ScrollToTop() {
 /* APP */
 function App() {
 
-  const { isAuthenticated } = useSelector(state => state.auth);
-  /* let user = checkLoginStatus(); */
+  const isAuthenticated = useSelector(authSelector);
+  const userInfo = useSelector(userSelector);
   const dispatch = useDispatch();
+
   useEffect(() => {
     async function isLoggedIn() {
       await dispatch(checkLoginStatus());
@@ -51,22 +52,22 @@ function App() {
     <Route path='/' element={
       <>
       <ScrollToTop />
-      <AppLayout isAuthen={isAuthenticated}/>
+      <AppLayout isAuthen={isAuthenticated} userInfo={userInfo}/>
       </>
     }>
 
       {/* PUBLIC ROUTES */}
       <Route index element={ <Navigate to="/home"/> }/>
-      <Route path="home" element={<HomePage />}/>
+      <Route path="home" element={<HomePage userInfo={userInfo}/>}/>
       <Route path="products" element={<ProductPage/>}/>
       <Route path="products/:id/:productname" element={<ProductDetailsPage/>}/>
       <Route path="products/search" element={<SearchPage/>}/>
-      <Route path="login" element={<Login/>}/>
+      <Route path="login" element={isAuthenticated? <Navigate to="/home"/> : <Login/>}/>
       <Route path="register" element={<Register/>}/>
       <Route path="orders" element={<Orders/>}/>
       
       {/* PRIVATE ROUTES */}
-      <Route exact path='/account' element={isAuthenticated? <Account/> : <Navigate to="/login"/>}/>
+      <Route exact path='/account' element={isAuthenticated? <Account userInfo={userInfo}/> : <Navigate to="/login"/>}/>
       <Route exact path='/cart' element={isAuthenticated? <Cart/> : <Navigate to="/login"/>}/>
       <Route exact path='/checkout' element={isAuthenticated? <Checkout/> : <Navigate to="/login"/>}/>
       <Route exact path='/orders' element={isAuthenticated? <Orders/> : <Navigate to="/login"/>}/>
