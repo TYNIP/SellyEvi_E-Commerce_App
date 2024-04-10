@@ -5,21 +5,17 @@ const pgp = require('pg-promise')({capSQL: true});
 
 //Conected with cartService
 module.exports = class CartItemModel {
-    //Creates a new cart set dor items
+    //Creates a new cart set cart items
     /**
     * @param  {Object}      data [Cart item data]
     * @return {Object|null}      [Created cart item]
     */
     static async create(data){
         try{
+            console.log('ahhhh')
             const statement = pgp.helpers.insert(data, null, 'cart_items');
-            const result = await db.query(statement);
-
-            if (result.rows?.length){
-                return result.rows[0];
-            } else {
-                return null;
-            };
+            await db.query(statement);
+            return;
 
         } catch(err){
             throw new Error(err);

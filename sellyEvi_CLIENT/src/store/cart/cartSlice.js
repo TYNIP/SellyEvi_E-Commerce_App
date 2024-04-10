@@ -1,17 +1,33 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { checkLoginStatus } from '../auth/authSlice';
-import { addToCart, checkout, fetchCart, removeFromCart } from '../../apis/cart';
+import {createCart, addToCart, checkout, fetchCart, removeFromCart } from '../../apis/cart';
 
 /* FUNCTIONS */
+export const createItem = createAsyncThunk(
+  'cart/createItem',
+  async ({product}) => {
+    try {
+      console.log('creating to cart yeah ');
+      console.log(product);
+      console.log('no jala create :c');
+      await createCart(product.id);
+      return;
+    } catch(err) {
+      throw err;
+    }
+  }
+);
+
 export const addItem = createAsyncThunk(
   'cart/addItem',
-  async ({ product, qty }, thunkAPI) => {
+  async ({product, quantity}) => {
     try {
-      const response = await addToCart(product.id, qty);
+      const response = await addToCart(product.id,product.price, quantity);
+      console.log('end og cart');
       const item = {
         ...product,
         cartItemId: response.id,
-        qty
+        quantity
       };
       return { item };
     } catch(err) {
@@ -71,9 +87,12 @@ const cartSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(createItem.fulfilled, (state, action) => {
+
+      })
       .addCase(addItem.fulfilled, (state, action) => {
         const { item } = action.payload;
-        state.items.push(item);
+        /* state.items.push(item); */
       })
       .addCase(checkLoginStatus.fulfilled, (state, action) => {
         const { cart } = action.payload;

@@ -10,7 +10,6 @@ export default function Header({sideBar, isAuthen}){
     const dispatch = useDispatch();
 
     const logout = () =>{
-        console.log('logging out');
         dispatch(logoutUser());
         navigate('/login');
         navigate('/login');
@@ -26,7 +25,7 @@ export default function Header({sideBar, isAuthen}){
         </Link>
         <div className="headerActions">
             <Link to='/account'><i className="fas fa fa-user-circle fa-fw" ></i></Link>
-            <Link to='/orders'><i className="fas fa fa-shopping-cart fa-fw" ></i></Link>
+            <Link to='/cart'><i className="fas fa fa-shopping-cart fa-fw" ></i></Link>
             <div>
                 {isAuthen && (<button id='LogOutbtn' onClick={logout}>Log Out</button>)}
                 {!isAuthen && (<Link to='/login'><button id='LogOutbtn'>Log In</button></Link>)}

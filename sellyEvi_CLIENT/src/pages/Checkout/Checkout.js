@@ -1,6 +1,7 @@
 import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import './Checkout.css';
 
 import CheckoutForm from '../../components/checkoutform/CheckoutForm';
 
@@ -9,9 +10,12 @@ const stripe = loadStripe("pk_test_51O4YpaC34BY5NMlip6rkCnbpRRzt0iAP4ERRHOEtUtpZ
 function Checkout() {
   return (
     <Elements stripe={stripe}>
-      <div style={{display: 'flex', backgroundColor: 'blue'}}>
+      <section id='checkout'>
+        <div className='loader'><p>THIS IS NOT A REAL E-COMMERSE APP. SO NO CHARGE WILL BE DONE NEITHER YOUR ACCOUNT INFROMATION WILL BE STORED </p></div>
+        <br/>
+        <div className='  error'><p>FOR SECURITY MEASURES DO NOT ADD REAL ACCOUNT INFORMATION </p></div>
         <CheckoutForm />
-      </div>
+      </section>
     </Elements>
   );
 }

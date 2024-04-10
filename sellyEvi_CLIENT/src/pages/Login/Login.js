@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Formik } from 'formik';
@@ -16,7 +16,9 @@ const Login = () => {
   const error = useSelector(selectError);
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState(false);
+  const [errGoogle, setErrGoogle] = useState(false);
   const [counter, setCounter] = useState(0);
+  const input = useRef();
 
   /* HANDLER */
   const handleLogin = async (credentials) => {
@@ -25,10 +27,12 @@ const Login = () => {
       await dispatch(loginUser(credentials));
       setIsLoading(false);
       setErr(false);
-      navigate('/home')
+      setErrGoogle(false);
+      navigate('/home');
     } catch(err) {
       setIsLoading(false);
       setErr(true);
+      setErrGoogle(false);
     }
   }
 
@@ -38,12 +42,13 @@ const Login = () => {
       await dispatch(loginWithGoogleUser());
       setIsLoading(false);
       setErr(false);
+      setErrGoogle(false);
       navigate('/home');
     } catch (err) {
       setIsLoading(false);
       setErr(true);
       setCounter(counter + 1);
-      if(counter > 3){alert('Something is wrong in the connection. Please log in manually or try again later.')}
+      if(counter > 1){setErrGoogle(true)}
     }
   };
 
@@ -113,7 +118,8 @@ const Login = () => {
               Do not have an account? <Link to='/register'><span className="span">Sign Up</span></Link>
             </p>
             <p className="p line">Or With</p>
-
+            {errGoogle && <div className='error'><p>Something is wrong in the connection. <br/>Cannot connect with google<br/>Please log in manually or try again later.</p></div>}
+            <br/>
             <div className="flex-row2">
               <a href={`${API_URL}/auth/google`} target='_blank' rel="noreferrer"><Button variant="contained" className="btn google" onClick={handleLoginWithGoogle} isLoading={isLoading}>Google</Button></a>
             </div>

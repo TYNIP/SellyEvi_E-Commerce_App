@@ -3,6 +3,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import { selectProductId, selectLoadingId, selectErrorId, fetchProductById} from '../../store/product/productSliceSpecific';
 import {convertImageBufferToUrl, convertPostgreSQLTimestamp} from '../../apis/functions';
+import CartButton from '../../features/addToCartBtn/AddBtn';
 import './product.css';
 
 export default function Product(){
@@ -57,10 +58,7 @@ export default function Product(){
                         <p className='price'>{products.price} USD</p>
                         <p className='description'>{products.description}</p>
                         <div className='center'>
-                        <button class="btn">
-                            <span class="btn__visible">Add To Cart</span>
-                            <span class="btn__invisible">{products.available? 'Available':'Not Available'}</span>
-                        </button>
+                            <CartButton product={products}/>
                         </div>
                     </div>
                 </div>

@@ -20,25 +20,13 @@ module.exports = (app)=> {
         };
     });
 
-    //Update user cart
-    router.put('/cart', async(req, res, next) => {
-        try{
-            const { id } = req.user;
-            const response = await CartServiceInstance.get({id});
-            res.status(200).send(response);
-
-        } catch(err){
-            next(err);
-        };
-    });
 
     //Create user cart
     router.post('/cart', async(req, res, next) => {
         try{
-            const {id} = req.user;
+            const {id} = req.session.user;
             const response = await CartServiceInstance.create({userId: id});
             res.status(200).send(response);
-
         } catch(err){
             next(err);
         };
@@ -47,11 +35,10 @@ module.exports = (app)=> {
     //Add item to user cart
     router.post('/cart/items', async(req, res, next) => {
         try{
-            const {id} = req.user;
+            const {id} = req.session.user;
             const data = req.body;
             const response = await CartServiceInstance.addItem(id, data);
             res.status(200).send(response);
-
         } catch(err){
             next(err);
         };

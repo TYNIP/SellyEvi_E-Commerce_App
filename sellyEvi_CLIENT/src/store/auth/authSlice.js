@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { isLoggedIn, login, register, logout, loginWithFacebook, loginWithGoogle } from '../../apis/auth';
+import { isLoggedIn, login, register, logout, loginWithGoogle } from '../../apis/auth';
 
 /* FUNCTIONS */
 export const checkLoginStatus = createAsyncThunk(
@@ -18,13 +18,24 @@ export const checkLoginStatus = createAsyncThunk(
   }
 );
 
+//third parties
+export const loginWithGoogleUser = createAsyncThunk(
+  'auth/loginWithGoogleUser',
+  async () => {
+      const response = await loginWithGoogle();
+
+      return {
+        user: response,
+        isAuthenticated: true
+      }
+  }
+);
+
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (credentials, thunkAPI) => {
     try {
-      console.log('login in process')
       const response = await login(credentials);
-      console.log('response from login', response);
       return {
         user: response,
         isAuthenticated: true
@@ -62,21 +73,6 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-//third parties
-export const loginWithGoogleUser = createAsyncThunk(
-  'auth/loginWithGoogleUser',
-  async () => {
-    try {
-      const response = await loginWithGoogle();
-      return {
-        user: response,
-        isAuthenticated: true
-      }
-    } catch(err) {
-      throw err;
-    }
-  }
-);
 
 /* SLICE */
 const initialState = {
@@ -92,19 +88,26 @@ const initialState = {
     extraReducers: builder => {
       builder
         .addCase(checkLoginStatus.fulfilled, (state, action) => {
-          const { isAuthenticated } = action.payload;
-          console.log('this is the new era check log in');
-          console.log(action.payload);
+          const { isAuthenticated, user } = action.payload;
           state.isAuthenticated = isAuthenticated;
+          state.userinfo = user;
         })
         .addCase(loginUser.fulfilled, (state, action) => {
           const {isAuthenticated, user} = action.payload;
           state.isAuthenticated = isAuthenticated;
-          console.log('this is the new era log in');
-          console.log(user);
           state.userinfo = user;
         })
         .addCase(loginUser.rejected, (state, action) => {
+          const { error } = action.payload;
+          state.isAuthenticated = false;
+          state.error = error;
+        })
+        .addCase(loginWithGoogleUser.fulfilled, (state, action) => {
+          const {isAuthenticated, user} = action.payload;
+          state.isAuthenticated = isAuthenticated;
+          state.userinfo = user;
+        })
+        .addCase(loginWithGoogleUser.rejected, (state, action) => {
           const { error } = action.payload;
           state.isAuthenticated = false;
           state.error = error;
@@ -124,16 +127,6 @@ const initialState = {
           state.isAuthenticated = false;
           state.userinfo = null;
           state.error = action.error.message;
-        })
-        .addCase(loginWithGoogleUser.fulfilled, (state, action) => {
-          const { isAuthenticated, user } = action.payload;
-          state.isAuthenticated = isAuthenticated;
-          state.userinfo = user;
-        })
-        .addCase(loginWithGoogleUser.rejected, (state, action) => {
-          const { error } = action.payload;
-          state.isAuthenticated = false;
-          state.error = error;
         })
     }
   });

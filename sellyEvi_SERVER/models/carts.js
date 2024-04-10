@@ -19,14 +19,19 @@ module.exports = class CartModel{
      * @return {Object|null} [Created user record]
     */
     async create(userId){
+        console.log('fiuuuum');
         try{
-            const data = {userId, ...this};
+            console.log('cart is being created');
+            const data = {user_id: userId};
             const statement = pgp.helpers.insert(data, null, 'carts') + 'RETURNING *';
+            console.log(statement);
             const result = await db.query(statement);
+            console.log('res:', results);
 
             if(result.rows?.length){
                 return result.rows[0];
             } else {
+                console.log('car not :c')
                 return null;
             };
 
@@ -49,7 +54,8 @@ module.exports = class CartModel{
         if(result.rows?.length){
             return result.rows[0];
         } else {
-            return null;
+            console.log('nothing found');
+            return [];
         }
     } catch(err){
         throw new Error(err);

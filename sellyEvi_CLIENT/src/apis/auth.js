@@ -1,14 +1,16 @@
 import API from './client';
 
+
 // logging a user in
 export const login = async (credentials) => {
   try {
-    const response = await API.post('auth/login', credentials);
+    const response = await API.post('auth/login', credentials, {withCredentials: true});
     return response.data;
   } catch (err) {
     throw err.response.data;
   }
 }
+
 
 // Registering a user
 export const register = async (data) => {
@@ -23,7 +25,7 @@ export const register = async (data) => {
 // verifying the logged in status of a user
 export const isLoggedIn = async () => {
   try {
-    const response = await API.get('auth/logged_in');
+    const response = await API.get('auth/logged_in', {withCredentials: true});
     return response.data;
   } catch(err) {
     throw err.response.data;
@@ -44,10 +46,7 @@ export const logout = async () => {
 // verifying the logged in status of a user
 
 export const loginWithGoogle = async () => {
-  try {
-    const response = await API.get('auth/google');
+    const response = await API.get('auth/google', {withCredentials: true});
+    console.log('second res', response)
     return response.data;
-  } catch(err) {
-    throw err.response.data;
-  }
 }

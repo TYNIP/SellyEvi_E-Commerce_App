@@ -47,14 +47,12 @@ module.exports = (app)=>{
     },
     async function(accessToken, refreshToken, profile, done) {
         try{
+            console.log('yeah server')
             const user = await UserModelInstance.findOneByEmail(profile.emails[0].value);
-    
-            if(!user){
-                throw createError(401,'Incorrect Username or Password');
-            };
-            return user;
+            return done(null, user);
         } catch(err){
-            throw createError(500, err);
+            console.log('nooo server')
+            return done(err);
         };
       }));
 

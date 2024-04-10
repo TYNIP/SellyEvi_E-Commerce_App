@@ -39,7 +39,7 @@ const Sidebar = ({ userInfo , isAuthen, sideBar }) => {
         <i className="fas fa fa-redo fa-fw" onClick={sideBar}></i>
       <div id='fixSideBar'>
       <div id='insideBar'>
-        <p>{greeting} <br/> {isAuthen? `Welcome back ${userInfo.firstname} ${userInfo.lastname}` : 'Welcome Stranger'}</p>
+        <p>{greeting} <br/> {isAuthen? `Welcome back ${userInfo.user.firstname} ${userInfo.user.lastname}` : 'Welcome Stranger'}</p>
         {!isAuthen && (<Link to='/login' onClick={sideBar}><span className='link'>Log In</span></Link>)}
         <h1>SellyEvi</h1>
         <Link to='/products'><button onClick={handleAllProducts}>All Products</button></Link>

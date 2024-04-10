@@ -7,7 +7,7 @@ export default function HomePage({userInfo}){
     return(
         <section id='homepage'>
         <div id='welcome'>
-            <h2>{userInfo? `What are we looking today ${userInfo.firstname}?` : `What are we looking today?`}</h2>
+            <h2>{userInfo? `What are we looking today ${userInfo.user.firstname}?` : `What are we looking today?`}</h2>
             <SearchBar/>
         </div>
         <div className='largeCenter'>

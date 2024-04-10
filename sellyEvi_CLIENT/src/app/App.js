@@ -38,7 +38,7 @@ function App() {
   const isAuthenticated = useSelector(authSelector);
   const userInfo = useSelector(userSelector);
   const dispatch = useDispatch();
-
+  console.log(isAuthenticated);
   useEffect(() => {
     async function isLoggedIn() {
       await dispatch(checkLoginStatus());

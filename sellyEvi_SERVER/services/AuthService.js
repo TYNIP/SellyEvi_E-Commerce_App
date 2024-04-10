@@ -32,6 +32,7 @@ module.exports = class AuthService {
             if(!user){
                 throw createError(401,'Incorrect Username or Password');
             };
+            
             if(user.password !== password){
                 throw createError(401,'Incorrect Username or Password');
             };

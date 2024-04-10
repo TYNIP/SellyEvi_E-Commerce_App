@@ -1,6 +1,8 @@
 const CartModel = require('../models/carts');
 const CartItemModel = require('../models/cart_items');
 const OrderModel = require('../models/orders');
+const ProductModel = require('../models/products');
+const ProductModelInstance = new ProductModel();
 
 /* SERVICE - CART */
 
@@ -10,10 +12,14 @@ module.exports = class CartService {
     async create(data){
         const {userId} = data;
         try {
-            const Cart = new CartModel();
-            const cart = await Cart.create(userId);
-            return cart;
-
+            const cart = await CartModel.findOneByUserId(userId);
+            if(cart.length === 0){
+                const Cart = new CartModel();
+                const cart = await Cart.create(userId);
+                return cart;
+            }else{
+                return cart;
+            }
         } catch(err) {
             throw err;
         };
@@ -33,12 +39,18 @@ module.exports = class CartService {
     };
 
     //Load user cart based on its id and create a cart item
-    async addItem(userId, item){
+    async addItem(userId, data){
         try{
             const cart = await CartModel.findOneByUserId(userId);
-            const cartItem = await CartItemModel.create({cartId: cart.id, ...item});
-            return cartItem;
-
+            console.log('cart:', cart)
+            if(cart.length !== 0){
+                console.log('running items')
+                const data_Cart = {product_id: data.product_id, cart_id: cart.id};
+                const cartItem = await CartItemModel.create(data_Cart);
+                return cartItem;
+            }else{
+                return [];
+            }
         } catch(err){
             throw err;
         };
@@ -90,7 +102,7 @@ module.exports = class CartService {
             amount: total,
             currency: 'usd',
             source: paymentInfo.id,
-            descriptio: 'Selly Evi Payment (NON EXISTANT - ACADEMIC APP)'
+            description: 'Selly Evi Payment (NON EXISTANT - ACADEMIC APP)'
         });
 
         const order = Order.update({status: 'COMPLETE'});

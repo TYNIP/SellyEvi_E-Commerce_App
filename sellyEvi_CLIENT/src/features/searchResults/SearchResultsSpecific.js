@@ -4,6 +4,7 @@ import {Link, useLocation} from 'react-router-dom';
 import { selectProductId, selectLoadingId, selectErrorId} from '../../store/product/productSliceSpecific';
 import {convertImageBufferToUrl} from '../../apis/functions';
 import './searchResults.css';
+import CartButton from '../addToCartBtn/AddBtn';
 
 // Import statements
 
@@ -52,10 +53,7 @@ const SearchResultsSpecific = () => {
               <h3>{product.name.toUpperCase()}</h3>
               <p>Price: {product.price} USD</p>
             </div>
-            <button className="btn">
-              <span className="btn__visible">Add To Cart</span>
-              <span className="btn__invisible">{product.available ? 'Available' : 'Not Available'}</span>
-            </button>
+            <CartButton product={product}/>
           </div>
         </Link>
         </>

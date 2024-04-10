@@ -7,7 +7,6 @@ const CartService = require('../services/CartService');
 const CartServiceInstance = new CartService();
 const UserService = require('../services/UserService');
 const UserServiceInstance = new UserService();
-const googleService = require('../services/GoogleService');
 
 /* AUTHs */
 
@@ -32,9 +31,8 @@ module.exports = (app, passport) =>{
         try{
             const {username, password} = req.body;
             const response = await AuthServiceInstance.login({email: username, password: password});
-            console.log(response);
             req.session.user = response;
-            res.status(200).send(response);
+            res.status(200).send({user:response});
         } catch(err){
             next(err);
         };
@@ -44,16 +42,25 @@ module.exports = (app, passport) =>{
     router.get('/google', passport.authenticate("auth-google", {scope: [
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/userinfo.profile"
-    
-      ]}), (req, res) => {
-        res.send(req.user)
+      ]}), async (req, res, next) => {
+        try{
+            const {email, password} = req.user;
+            const response = await AuthServiceInstance.login({email: email, password: password});
+            req.session.user = response;
+            res.status(200).send({user:response});
+        } catch(err){
+            console.log('vamooooo');
+            throw err;
+        }
       });
 
     //Log in status
     router.get('/logged_in', async(req, res, next)=>{
         try{
-            const {id} = req.user;
-            consol.log(id);
+            console.log('status log in retreive')
+            console.log(req.session.user);
+            const {id} = req.session.user;
+            console.log(id);
             const cart = await CartServiceInstance.loadCart(id);
             const user = await UserServiceInstance.get({id});
             console.log(cart);
@@ -64,6 +71,7 @@ module.exports = (app, passport) =>{
                 user
             });
         } catch(err){
+            console.log(err);
             next(err);
         }
     });

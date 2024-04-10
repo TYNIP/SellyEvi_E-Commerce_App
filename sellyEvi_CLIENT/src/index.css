@@ -82,6 +82,18 @@ button, a, .link, i{
 .error p{
   color: white;
   font-weight: bold;
+  text-align: center;
+}
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #9e57f5;
+}
+.loader p{
+  color: white;
+  font-weight: bold;
+  text-align: center;
 }
 /* cart btn */
 .btn {

@@ -1,0 +1,23 @@
+/* *{
+    border: 1px solid black;
+} */
+.cart-details-container{
+    padding:  2% 5%;
+    margin: 5%;
+    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.5);
+}
+.cart-info-container{
+    border-left: 1px solid rgba(0,0,0,0.2);
+    border-right: 1px solid rgba(0,0,0,0.2);
+}
+.cart-info-container, .cart-summary-container{
+    padding: 2% 0;
+}
+.btncheck{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btncheck .checkout-btn{
+    width: 50%;
+}

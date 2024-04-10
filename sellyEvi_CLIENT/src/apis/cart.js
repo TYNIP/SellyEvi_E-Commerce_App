@@ -11,9 +11,19 @@ export const fetchCart = async () => {
 }
 
 // Add a product to a user's cart
-export const addToCart = async (productId, qty) => {
+export const createCart = async (productId) => {
   try {
-    const response = await API.post(`carts/cart/items`, { productId, qty });
+    console.log('the endpoint create ahhh');
+    console.log(productId);
+    const response = await API.post(`carts/cart`, { product_id: productId}, {withCredentials: true});
+    return response.data;
+  } catch(err) {
+    throw err.response.data;
+  }
+}
+export const addToCart = async (productId, productPrice, quantity) => {
+  try {
+    const response = await API.post(`carts/cart/items`, { product_id: productId, price: productPrice, quantity: quantity }, {withCredentials: true});
     return response.data;
   } catch(err) {
     throw err.response.data;

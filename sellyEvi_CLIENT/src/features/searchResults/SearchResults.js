@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {Link, useLocation} from 'react-router-dom';
 import { selectProduct, selectLoading, selectError, fetchAllProduct, fetchLatestProducts, fetchOldestProducts} from '../../store/product/productSliceGeneral';
 import {convertImageBufferToUrl} from '../../apis/functions';
+import CartButton from '../addToCartBtn/AddBtn';
 import './searchResults.css';
 
 // Import statements
@@ -64,10 +65,7 @@ const SearchResults = ({isLatest, isOldest, isAll}) => {
               <h3>{product.name.toUpperCase()}</h3>
               <p>Price: {product.price} USD</p>
             </div>
-            <button className="btn">
-              <span className="btn__visible">Add To Cart</span>
-              <span className="btn__invisible">{product.available ? 'Available' : 'Not Available'}</span>
-            </button>
+            <CartButton product={product}/>
           </div>
         </Link>
       ))}

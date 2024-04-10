@@ -66,7 +66,6 @@ const Register = () => {
             validateOnBlur
             onSubmit={async (data) => {
               const { confirmPassword, ...credentials } = data;
-              console.log(credentials);
               await handleRegister(credentials);
             }}
           >

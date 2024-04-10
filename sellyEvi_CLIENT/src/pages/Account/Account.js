@@ -6,13 +6,31 @@ function Account({userInfo}) {
   return (
     <section id='account'>
       <div id='accounInfo'>
-        <h2>Account Information</h2>
+        <h2>Profile</h2>
+        <p>Your account information</p>
         <div className='ai2'>
-        <p>First Name: {`${userInfo.firstname}`}</p>
-        <p>Last Name: {`${userInfo.lastname}`}</p>
-        <p>Email: {`${userInfo.email}`}</p>
-        <p>User Id: {`${userInfo.id}`}</p>
-        <p>User Created: {`${userInfo.created}`}</p>
+        <table class="custom-table">
+        <tr>
+            <td>First Name:</td>
+            <td>{`${userInfo.user.firstname}`}</td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td>{`${userInfo.user.lastname}`}</td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td>{`${userInfo.user.email}`}</td>
+        </tr>
+        <tr>
+            <td>User Id:</td>
+            <td>{`${userInfo.user.id}`}</td>
+        </tr>
+        <tr>
+            <td>User Created:</td>
+            <td>{`${userInfo.user.created}`}</td>
+        </tr>
+    </table>
         </div>
         <Link to='/cart' className='btnact'>Check your Cart</Link>
         <br/>
