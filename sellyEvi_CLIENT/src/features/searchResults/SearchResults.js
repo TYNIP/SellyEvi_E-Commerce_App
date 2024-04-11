@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {Link, useLocation} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { selectProduct, selectLoading, selectError, fetchAllProduct, fetchLatestProducts, fetchOldestProducts} from '../../store/product/productSliceGeneral';
 import {convertImageBufferToUrl} from '../../apis/functions';
 import CartButton from '../addToCartBtn/AddBtn';

@@ -18,7 +18,6 @@ module.exports = (app, passport) =>{
         try{
             const data = req.body;
             const response = await AuthServiceInstance.register(data);
-            console.log('response:', response);
             res.status(200).send(response);
 
         } catch(err){
@@ -63,8 +62,8 @@ module.exports = (app, passport) =>{
             console.log(id);
             const cart = await CartServiceInstance.loadCart(id);
             const user = await UserServiceInstance.get({id});
+            console.log('loading cart from logged in status');
             console.log(cart);
-            console.log(user);
             res.status(200).send({
                 cart,
                 loggedIn: true,

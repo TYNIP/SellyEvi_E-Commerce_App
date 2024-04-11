@@ -57,7 +57,6 @@ module.exports = class ProductModel {
 
     async findProducts(search){
         try{
-            console.log('final', search)
             const statement = `SELECT *
                    FROM products
                    WHERE name LIKE '%' || $1 || '%'

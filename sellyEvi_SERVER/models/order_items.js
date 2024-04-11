@@ -6,37 +6,24 @@ const pgp = require('pg-promise');
 
 //Conected with orderService
 module.exports = class OrderItemModel {
-    constructor(data = {}) {
-        this.created = data.created || DateTime.utc().toISO();
-        this.description = data.description;
-        this.modified = DateTime.utc().toISO();
-        this.name = data.name;
-        this.price = data.price || 0;
-        this.productId = data.id;
-        this.qty = data.qty || 1;
-        this.orderId = data.orderId || null;
-      };
-
       //Create new order item
       /**
        * @param {Object} data [Order item data]
        * @return {Object|null} [Created order item]
        */
-      static async create(data){
+      static async createOrderItems(data){
+        console.log("hola2?");
         try{
-            const statement = pgp.helpers.insert(data, null, 'order_items') + 'RETURNING *';
-            const result = await db.query(statement);
-
-            if(result.rows?.length){
-                return result.rows[0];
-            } else {
-                return null;
-            };
-
+            console.log('order item creating wua', data);
+            const statement = pgp.helpers.insert(data, null, 'order_items');
+            console.log('the final statement', statement);
+            await db.query(statement);
+            return 'Order Added Successfully';
         } catch(err){
+            console.log('como que otro error ahhhh', err);
             throw new Error(err);
         }
-      };
+    };
 
       //Retreive order items for an order by id
       /** 

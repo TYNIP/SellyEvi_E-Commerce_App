@@ -26,10 +26,8 @@ export default function Header({sideBar, isAuthen}){
         <div className="headerActions">
             <Link to='/account'><i className="fas fa fa-user-circle fa-fw" ></i></Link>
             <Link to='/cart'><i className="fas fa fa-shopping-cart fa-fw" ></i></Link>
-            <div>
-                {isAuthen && (<button id='LogOutbtn' onClick={logout}>Log Out</button>)}
+                {isAuthen && (<Link><button id='LogOutbtn' onClick={logout}>Log Out</button></Link>)}
                 {!isAuthen && (<Link to='/login'><button id='LogOutbtn'>Log In</button></Link>)}
-            </div>
         </div>
     </div>
     );

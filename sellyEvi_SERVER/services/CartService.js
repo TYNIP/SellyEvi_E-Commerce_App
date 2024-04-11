@@ -42,15 +42,20 @@ module.exports = class CartService {
     async addItem(userId, data){
         try{
             const cart = await CartModel.findOneByUserId(userId);
-            console.log('cart:', cart)
-            if(cart.length !== 0){
-                console.log('running items')
-                const data_Cart = {product_id: data.product_id, cart_id: cart.id};
-                const cartItem = await CartItemModel.create(data_Cart);
+            const items = await CartItemModel.findOneByCartId(data.product_id, cart.id);
+            if(cart.length !== 0 && items.length === 0){
+                const itemData = {product_id: data.product_id, cart_id: cart.id, quantity: data.quantity, price: data.price}
+                const cartItem = await CartItemModel.create(itemData);
                 return cartItem;
-            }else{
-                return [];
             }
+            if(cart.length !== 0 && items.length !== 0){
+                const itemData = {quantity: data.quantity + items.quantity};
+                const cartItem = await CartItemModel.update(items.id, itemData);
+                return cartItem;
+            }
+
+            return [];
+
         } catch(err){
             throw err;
         };
@@ -77,7 +82,19 @@ module.exports = class CartService {
             throw err;
         };
     };
+    /* 
+    SIMULATES CHECKOUT
+    */
+   //Update cart item by id
+   async pay(cartItemId, data){
+        try{
+            const cartItem = await CartItemModel.update(cartItemId, data);
+            return cartItem;
 
+        } catch(err){
+            throw err;
+        };
+    };
     /* 
     Check out user
     Load cart items, generate the total price and initial order.

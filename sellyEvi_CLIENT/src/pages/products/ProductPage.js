@@ -10,7 +10,7 @@ export default function ProductPage(){
                 <SearchBar/>
             </div>
         <div>
-            <SearchResults />
+            <SearchResults/>
         </div>
         </section>
     );

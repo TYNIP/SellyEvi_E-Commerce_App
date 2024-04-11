@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {Link, useLocation} from 'react-router-dom';
+import { useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
 import { selectProductId, selectLoadingId, selectErrorId} from '../../store/product/productSliceSpecific';
 import {convertImageBufferToUrl} from '../../apis/functions';
 import './searchResults.css';

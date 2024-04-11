@@ -1,27 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import { useDispatch } from 'react-redux';
+import Button from '@mui/material/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import {Link} from 'react-router-dom';
 import Incrementer from '../incrementer/Incrementer';
 import { removeItem } from '../../store/cart/cartSlice';
+import {convertImageBufferToUrl} from '../../apis/functions';
 import './CartItemCard.css';
 
 function CartItemCard(props) {
+  const products = props;
+  console.log('the product',products);
+  const { cartItemId, name, price, quantity, total, id, images} = props;
+  const [ qty, setQty ] = useState(quantity);
+  const [edit, setEdit] = useState(false);
+  const [imageUrls, setImageUrls] = useState([]);
 
-  const { cartItemId, name, price, qty} = props;
-  const [ quantity, setQuantity ] = useState(qty);
 
   const dispatch = useDispatch();
+  console.log();
+
+  /* image */
+  useEffect(() => {
+    const fetchImageUrls = async () => {
+      if (products && Array.isArray(products.images)) {
+        const urls = await await convertImageBufferToUrl(products.images);
+        setImageUrls(urls);
+        };
+    };
+    fetchImageUrls();
+  }, [products]);
 
   function handleIncrement() {
-    setQuantity(quantity + 1);
+    setQty(qty + 1);
   }
 
   function handleDecrement() {
-    if (quantity === 1) {
+    if (qty === 1) {
       return;
     }
-    setQuantity(quantity - 1);
+    setQty(qty - 1);
+  }
+
+  function editable(){
+    setEdit(!edit);
   }
 
   async function remove() {
@@ -30,24 +52,68 @@ function CartItemCard(props) {
 
   return (
     <>
-      <div className="cart-item-container">
-        <div className="cart-item-details">
-          <img src="https://m.media-amazon.com/images/I/61fTX5TjAEL._UL1001_.jpg" alt="" style={{height: '100%', paddingRight: '10px'}} />
-          <p>{name}</p>
-          <p>{price / 100}</p>
+    <tr id='tableres'>
+        <td className='tablew'>
+          <div className="cart-item-details">
+            <div className='imgFinalContainer'>
+                <img src={imageUrls} alt={products.name}/>
+            </div>
+            <Link to={`/products/${id}/${name}`}>
+              <p>{name}</p>
+            </Link>
+          </div>
+        </td>
+
+        <td>
+        <div className="cart-item-interact">
+
+        {!edit && (
+            <>
+              <p>{quantity}</p>
+            <div className='thefinalbutton'>
+              <Button
+                variant="contained"
+                color="primary"
+                className="checkout-btn"
+                onClick={editable}
+              >Edit Qty</Button>
+            </div>
+            </>
+          )}
+
+          {edit && (
+            <>
+              <Incrementer
+              onDecrement={handleDecrement}
+              onIncrement={handleIncrement}
+              value={qty}
+            />
+            <div className='thefinalbutton'>
+              <Button
+                variant="contained"
+                color="primary"
+                className="checkout-btn"
+                onClick={remove}
+              >Save Changes</Button>
+            </div>
+            </>
+          )}
+
         </div>
-        <div className=".cart-item-interact">
-          <Incrementer
-            onDecrement={handleDecrement}
-            onIncrement={handleIncrement}
-            value={quantity}
-          />
-          <Typography onClick={remove}>Remove</Typography>
+        </td>
+
+        <td>
+        <div className="cart-item-price">
+          <p>{price} USD</p>
         </div>
-        <div className=".cart-item-price">
-          <p>{`$${price * qty / 100}`}</p>
+        </td>
+
+        <td>
+        <div className="cart-item-price">
+          <p>{total} USD</p>
         </div>
-      </div>
+        </td>
+    </tr>
       <Divider />
     </>
   );

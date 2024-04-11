@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const CartService = require('../services/CartService');
 const CartServiceInstance = new CartService();
+const OrderService = require('../services/OrderService');
+const OrderServiceInstance = new OrderService();
 
 /* CARTs */
 
@@ -11,7 +13,7 @@ module.exports = (app)=> {
     //Get user cart
     router.get('/cart', async(req, res, next) => {
         try {
-            const {id} = req.user;
+            const {id} = req.session.user;
             const response = await CartServiceInstance.loadCart(id);
             res.status(200).send(response);
 
@@ -38,7 +40,7 @@ module.exports = (app)=> {
             const {id} = req.session.user;
             const data = req.body;
             const response = await CartServiceInstance.addItem(id, data);
-            res.status(200).send(response);
+            res.status(200).send({status:response});
         } catch(err){
             next(err);
         };
@@ -72,9 +74,12 @@ module.exports = (app)=> {
     //Checkout user cart
     router.post('/cart/checkout', async(req, res, next) =>{
         try{
-            const {id} = req.user;
-            const {cartId, paymentInfo} = req.body;
-            const response = await CartServiceInstance.checkout(cartId, id, paymentInfo);
+            console.log('checok out in process')
+            const {id} = req.session.user;
+            const {cartId} = req.body;
+            console.log(id);
+            console.log(cartId);
+            const response = await OrderServiceInstance.create(id, cartId);
             res.status(200).send(response);
 
         } catch(err){

@@ -25,19 +25,21 @@ module.exports = class OrderModel{
       /** 
        * @return {Object|null} [Created order record]
       */
-     async create(){
+     async create(OrderData){
         try{
-            const {items, ...order} = this;
-            const statement = pgp.helpers.insert(order, null, 'orders') + 'RETURNING *';
+            const {total, id} = OrderData;
+            console.log('starting to create an order');
+            const data = {total: total, status: 'created', user_id: id };
+            const statement = pgp.helpers.insert(data, null, 'orders') + 'RETURNING *';
             const result = await db.query(statement);
-
+            console.log('results from creatin an order', result.rows[0]);
             if(result.rows?.length){
                 return result.rows[0];
             } else {
                 return null;
             };
 
-        } catch (err){
+        } catch(err){
             throw new Error(err);
         }
      };
@@ -80,7 +82,8 @@ module.exports = class OrderModel{
             if(result.rows?.length){
                 return result.rows[0];
             } else {
-                return null;
+                console.log('nothing found order')
+                return [];
             };
 
         } catch(err){

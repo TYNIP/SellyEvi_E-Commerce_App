@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Formik } from 'formik';
@@ -7,6 +7,7 @@ import Button from '../../components/button/Button';
 import Divider from '@mui/material/Divider';
 import TextField from '../../components/TextField/TextField';
 import { loginUser, selectError, loginWithGoogleUser } from '../../store/auth/authSlice';
+import { checkLoginStatus} from '../../store/auth/authSlice';
 import './Login.css';
 import {API_URL} from '../../apis/functions';
 
@@ -18,13 +19,13 @@ const Login = () => {
   const [err, setErr] = useState(false);
   const [errGoogle, setErrGoogle] = useState(false);
   const [counter, setCounter] = useState(0);
-  const input = useRef();
 
   /* HANDLER */
   const handleLogin = async (credentials) => {
     setIsLoading(true);
     try {
       await dispatch(loginUser(credentials));
+      await dispatch(checkLoginStatus());
       setIsLoading(false);
       setErr(false);
       setErrGoogle(false);

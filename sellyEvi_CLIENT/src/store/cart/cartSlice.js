@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import { checkLoginStatus } from '../auth/authSlice';
 import {createCart, addToCart, checkout, fetchCart, removeFromCart } from '../../apis/cart';
 
@@ -7,9 +7,7 @@ export const createItem = createAsyncThunk(
   'cart/createItem',
   async ({product}) => {
     try {
-      console.log('creating to cart yeah ');
       console.log(product);
-      console.log('no jala create :c');
       await createCart(product.id);
       return;
     } catch(err) {
@@ -23,13 +21,7 @@ export const addItem = createAsyncThunk(
   async ({product, quantity}) => {
     try {
       const response = await addToCart(product.id,product.price, quantity);
-      console.log('end og cart');
-      const item = {
-        ...product,
-        cartItemId: response.id,
-        quantity
-      };
-      return { item };
+      return response;
     } catch(err) {
       throw err;
     }
@@ -40,7 +32,10 @@ export const checkoutCart = createAsyncThunk(
   'cart/checkoutCart',
   async ({ cartId, paymentInfo }, thunkAPI) => {
     try {
+      console.log('cartId', paymentInfo)
+      console.log('paymentInfo', paymentInfo)
       const response = await checkout(cartId, paymentInfo);
+      console.log('the payment response', response);
       return {
         order: response
       }
@@ -78,8 +73,12 @@ export const removeItem = createAsyncThunk(
   }
 );
 
+
 /* SLICE */
-const initialState = {};
+const initialState = {
+  status: false,
+  message: '',
+};
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -91,8 +90,9 @@ const cartSlice = createSlice({
 
       })
       .addCase(addItem.fulfilled, (state, action) => {
-        const { item } = action.payload;
-        /* state.items.push(item); */
+        const {status} = action.payload;
+        state.status = true;
+        state.message = status;
       })
       .addCase(checkLoginStatus.fulfilled, (state, action) => {
         const { cart } = action.payload;
@@ -113,4 +113,6 @@ const cartSlice = createSlice({
 });
 
 // Export reducer 
+export const statusSelector = (state) => state.cart.status;
+export const msgSelector = (state) => state.cart.message;
 export default cartSlice.reducer;
