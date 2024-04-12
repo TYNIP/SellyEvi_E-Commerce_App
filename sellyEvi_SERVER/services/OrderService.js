@@ -13,7 +13,7 @@ module.exports = class OrderService{
             if(cart.length !== 0 ){
                 let total;
                  if(cart.length > 1){
-                    total = cart.reduce((accumulator, currentValue) => Number(accumulator.total) + Number(currentValue.total));
+                    total = cart.reduce((accumulator, currentValue) => Number(accumulator) + Number(currentValue.total), 0);
                 } else{
                     total = cart[0].total;
                 }

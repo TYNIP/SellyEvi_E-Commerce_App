@@ -122,7 +122,7 @@ const Login = () => {
             {errGoogle && <div className='error'><p>Something is wrong in the connection. <br/>Cannot connect with google<br/>Please log in manually or try again later.</p></div>}
             <br/>
             <div className="flex-row2">
-              <a href={`${API_URL}/auth/google`} target='_blank' rel="noreferrer"><Button variant="contained" className="btn google" onClick={handleLoginWithGoogle} isLoading={isLoading}>Google</Button></a>
+              <Button variant="contained" className="btn google" onClick={handleLoginWithGoogle} isLoading={isLoading}>Google</Button>
             </div>
           </Form>
         </Formik>

@@ -25,8 +25,9 @@ function Cart() {
     setErr(true);
   }
   function calculateTotal() {
-    return items.reduce((accumulator, currentValue) => Number(accumulator.total) + Number(currentValue.total));
+    return items.reduce((accumulator, currentValue) => Number(accumulator) + Number(currentValue.total), 0);
   };
+
   let bridge;
   if(cart.length !== 0 && items === undefined){
     bridge = false;

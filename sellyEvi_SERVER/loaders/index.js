@@ -13,8 +13,7 @@ module.exports = async(app) =>{
     //General error handler
     app.use((err, req, res, next) =>{
         const {message, status} = err;
-        console.log('the error message');
-        /* return res.status(status).send({message}); */
+        console.log('Error message');
         if(status === undefined){
             return res.status(404).send({message});
         } else {

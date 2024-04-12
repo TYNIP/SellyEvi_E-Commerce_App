@@ -11,8 +11,7 @@ const {SESSION_SECRET, GOOGLE } = require('../config');
 /* API AUTH MANAGEMENT */
 
 module.exports = (app)=>{
-    console.log('passport running');
-
+    console.log('Passport Running');
     app.use(passport.initialize());
     app.use(passport.session());
 
@@ -22,9 +21,7 @@ module.exports = (app)=>{
 
     passport.deserializeUser(async (id, done) => {
         try {
-            console.log('deserializing user');
             const user = await userService.get({ id });
-            console.log(user)
             done(null, user); 
         } catch (err) {
             done(err); 
@@ -49,15 +46,12 @@ module.exports = (app)=>{
     },
     async function(accessToken, refreshToken, profile, done) {
         try{
-            console.log('yeah server')
             const user = await UserModelInstance.findOneByEmail(profile.emails[0].value);
             return done(null, user);
         } catch(err){
-            console.log('nooo server')
             return done(err);
         };
       }));
 
-    console.log('passport stops');
     return passport;
 };

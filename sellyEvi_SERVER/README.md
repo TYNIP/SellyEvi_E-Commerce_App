@@ -1,7 +1,8 @@
 # SERVER - SellyEvi | E-commerce APP
-API that serves the backend and function for the Selly Evi e-commerce application.
+Backend of Selly Evi e-commerce application.
 
 [CLIENT - SellyEvi](../sellyEvi_CLIENT/README.md)
+[API DOCUMENTATION](../sellyEvi_CLIENT/README.md)
 
 ## API Structure
 
@@ -16,71 +17,66 @@ The API follows a modular structure, with each component responsible for a speci
 ## Data Base ERD
 ![DB ERD](./resources/ERD_SELLY_EVI.png)
 
-## Endpoint | Paths
+## Security Measures
+### Authentication and Authorization
+- The API uses Passport.js for authentication, supporting both local and Google OAuth2 strategies.
+- Passwords are securely hashed using Bcrypt before being stored in the database.
+- Sessions are managed securely using the express-session middleware with session cookies.
+- Access control is implemented to restrict access to certain endpoints based on user roles or permissions.
 
-**DOCUMENTATION AT '/docs' path**
+### Data Protection
+- CORS (Cross-Origin Resource Sharing) is configured to allow requests only from trusted domains, preventing unauthorized access to resources.
+- Helmet is used to set various HTTP headers to secure the API against common vulnerabilities, such as XSS (Cross-Site Scripting) attacks.
+- Data stored in the database is protected against SQL injections by using parameterized queries provided by Sequelize ORM.
+- Sensitive data exposure is minimized by securely hashing passwords and encrypting session cookies.
+- Authentication tokens are securely transmitted using HTTPS to prevent interception and tampering.
 
-#### /auth/____
-| Paths                 | HTTP Verb | Purpose                        |
-|-----------------------|-----------|--------------------------------|
-| /register             | POST       | Sign up user                   |
-| /login                | POST       | Log in user                    |
+### OWASP Top 10 Protection
+The API is protected against various types of attacks outlined in the OWASP Top 10:
 
-#### /carts/____
-| Paths                   | HTTP Verb | Purpose                        |
-|-------------------------|-----------|--------------------------------|
-| /cart                   | GET       | Get user cart                  |
-| /cart                   | PUT       | Update user cart               |
-| /cart                   | POST      | Create user cart               |
-| /cart/items             | POST      | Add item to user cart          |
-| /cart/items/:cartItemId | PUT       | Update item from user cart     |
-| /cart/items/:cartItemId | DELETE    | Delete item from user cart     |
-| /cart/checkout          | POST      | Checkout user cart             |
+1) Injection Attacks: Parameterized queries are used to prevent SQL injection attacks.
+2) Broken Authentication: Passwords are securely hashed, and authentication tokens are encrypted to prevent unauthorized access.
+3) Sensitive Data Exposure: Sensitive data such as passwords and session cookies are encrypted and securely stored.
+4) XML External Entities (XXE): The API does not process XML input, reducing the risk of XXE attacks.
+5) Broken Access Control: Access control measures are implemented to restrict access to authorized users only.
+6) Security Misconfiguration: The API is configured with secure defaults using middleware such as Helmet.
+7) Cross-Site Scripting (XSS): Helmet sets HTTP headers to prevent XSS attacks, and user input is sanitized before being processed.
+8) Insecure Deserialization: Serialized data is validated and sanitized to prevent insecure deserialization vulnerabilities.
+9) Using Components with Known Vulnerabilities: Regular updates and patches are applied to all dependencies to mitigate known vulnerabilities.
+10) Insufficient Logging & Monitoring: Comprehensive logging and monitoring are implemented to detect and respond to security incidents.
 
-#### /orders____
-| Paths                 | HTTP Verb | Purpose                        |
-|-----------------------|-----------|--------------------------------|
-| /                     | GET       | Get user orders                |
-| /:orderId             | GET       | Find user order                |
-
-#### /products____
-| Paths                 | HTTP Verb | Purpose                        |
-|-----------------------|-----------|--------------------------------|
-| /                     | GET       | Get user products              |
-| /:productId           | GET       | Find user product              |
-
-#### /users____
-| Paths                 | HTTP Verb | Purpose                        |
-|-----------------------|-----------|--------------------------------|
-| /:userId              | GET       | Get user                       |
-| /:userId              | PUT       | Update user info               |
-
-## Features
-
-- **User Authentication**: Users can sign up for an account and log in securely.
-- **User Management**: Users can view their profile information and update it as needed.
-- **Cart Management**: Users can view, add items to, update, and delete items from their shopping cart.
-- **Order Management**: Users can view their order history and details of individual orders.
-- **Product Management**: Users can view the list of available products and product details.
-
-## API Security
-
-- **Authentication**: Users can sign up or log in using username and password authentication.
-- **Authorization**: Access to certain endpoints is restricted based on user roles and permissions.
-- **Data Encryption**: Passwords and sensitive information are stored securely using encryption techniques.
-- **CORS**: Cross-Origin Resource Sharing is enabled to control which domains can access the API resources.
+## API Features
+- User authentication and authorization
+- Product management (CRUD operations)
+- Cart management (Add, remove, update cart items)
+- Order management (Create, list orders)
+- Search products
+- Google OAuth2 authentication
+- Secure session management
+- CORS protection
+- HTTPS support
+- Error handling middleware
 
 ## Technologies Used
 - Node.js
 - Express.js
 - PostgreSQL
+- Sequelize ORM
 - Passport.js (for authentication)
+- Bcrypt (for password hashing)
 - Stripe (for payment processing)
 - Swagger (for API documentation)
 - js-yaml (for YAML file generation)
 - luxon.js (for date/time manipulation)
 - cors: Middleware for enabling CORS (Cross-Origin Resource Sharing).
 - dotenv: Loads environment variables from a .env file.
+- Helmet
+- body-parser
+- Compression
+- fs
+- pg
+- pg-promise
 - express-session: Middleware for managing session data.
 - http-errors: Creates HTTP error objects.
 - passport-local: Passport strategy for authenticating with a username and password.
+- passport-google-oauth20

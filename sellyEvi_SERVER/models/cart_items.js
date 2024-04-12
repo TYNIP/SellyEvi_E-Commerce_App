@@ -7,6 +7,7 @@ const pgp = require('pg-promise')({capSQL: true});
 module.exports = class CartItemModel {
     //Loads cart items from user by cart id and product id
     /** 
+     * @param {number} productId [User id]
      * @param {number} userId [User id]
      * @return {Object|null} [Cart record]
     */
@@ -104,6 +105,7 @@ module.exports = class CartItemModel {
     //Deletes a cart item
     /** 
      * @param {Object} id [Cart item id]
+     * * @param {Object} id [Cart id]
      * @return {Object|[]} [Deleted cart item]
     */
    static async deleteItem(cartItemId, cartId){

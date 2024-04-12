@@ -48,7 +48,6 @@ module.exports = (app, passport) =>{
             req.session.user = response;
             res.status(200).send({user:response});
         } catch(err){
-            console.log('vamooooo');
             throw err;
         }
       });
@@ -56,21 +55,15 @@ module.exports = (app, passport) =>{
     //Log in status
     router.get('/logged_in', async(req, res, next)=>{
         try{
-            console.log('status log in retreive')
-            console.log(req.session);
             const {id} = req.session.user;
-            console.log(id);
             const cart = await CartServiceInstance.loadCart(id);
             const user = await UserServiceInstance.get({id});
-            console.log('loading cart from logged in status');
-            console.log(cart);
             res.status(200).send({
                 cart,
                 loggedIn: true,
                 user
             });
         } catch(err){
-            console.log(err);
             next(err);
         }
     });

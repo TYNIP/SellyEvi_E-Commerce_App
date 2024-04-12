@@ -9,7 +9,7 @@ const {SESSION_SECRET, allowedDomains} = require('../config');
 /* API MIDDLEWARE */
 
 module.exports = (app) =>{
-    console.log('express running')
+    console.log('express running');
     app.set('trust proxy', 1);
 
     /* USER COOKIE */
@@ -35,6 +35,5 @@ module.exports = (app) =>{
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(compression());
-    console.log('express strops')
     return app;
 };

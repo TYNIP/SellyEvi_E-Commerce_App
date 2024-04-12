@@ -9,6 +9,7 @@ const OrderItem = require('./order_items');
 module.exports = class OrderModel{
       //Creates a new order fro the user
       /** 
+       * @param {Object} orderData [Cart item data]
        * @return {Object|null} [Created order record]
       */
      async create(OrderData){
@@ -30,7 +31,6 @@ module.exports = class OrderModel{
 
      //Update an order for a user
      /**  
-      * @param {Object} id [Order id]
       * @param {Object} data [Order data]
       * @return {Object|null} [updated order record]
      */

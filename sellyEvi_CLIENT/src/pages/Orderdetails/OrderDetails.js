@@ -20,7 +20,7 @@ function OrderDetails() {
   }, [dispatch, orderId]);
   
   function calculateTotal() {
-    return items.reduce((accumulator, currentValue) => (Number(accumulator.price)*Number(accumulator.quantity)) + (Number(currentValue.price)*Number(currentValue.quantity)));
+    return items.reduce((accumulator, currentValue) => Number(accumulator) + Number(currentValue.price)*Number(currentValue.quantity), 0);
   };
 
     return (
