@@ -1,7 +1,7 @@
 # CLIENT - SellyEvi | E-commerce APP
 Client Side of Selly Evi e-commerce application.
 
-[SERVER - SellyEvi](../sellyEvi_SERVER/README.md)
+- **[SERVER - SellyEvi](../sellyEvi_SERVER/README.md)**
 
 ## Client Side
 ## Features

@@ -1,8 +1,8 @@
 # SERVER - SellyEvi | E-commerce APP
 Backend of Selly Evi e-commerce application.
 
-[CLIENT - SellyEvi](../sellyEvi_CLIENT/README.md)
-[API DOCUMENTATION](../sellyEvi_CLIENT/README.md)
+- **[CLIENT - SellyEvi](../sellyEvi_CLIENT/README.md)**
+- **[API DOCUMENTATION](../sellyEvi_CLIENT/README.md)**
 
 ## API Structure
 
