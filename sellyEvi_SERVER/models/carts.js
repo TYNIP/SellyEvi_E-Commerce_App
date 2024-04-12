@@ -48,7 +48,6 @@ module.exports = class CartModel{
         if(result.rows?.length){
             return result.rows[0];
         } else {
-            console.log('nothing found cart');
             return [];
         }
     } catch(err){
@@ -77,4 +76,22 @@ module.exports = class CartModel{
         throw new Error(err);
     }
    };
+
+   //Deletes cart
+    /** 
+     * @param {Object} id [Cart item id]
+     * @return {Object|[]} [Deleted cart item]
+    */
+    static async deleteCart(id){
+        try{
+            const statement = `DELETE FROM carts
+            WHERE id=$1 RETURNING *`;
+            const queryParams = [id];
+            const result = await db.query(statement, queryParams);
+            return 'Cart Deleted';
+    
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
 };

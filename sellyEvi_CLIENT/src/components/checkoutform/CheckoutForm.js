@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { checkoutCart } from '../../store/cart/cartSlice';
 import './CheckoutForm.css';
 
 function CheckoutForm() {
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const elements = useElements();
   const stripe = useStripe();
@@ -16,7 +17,6 @@ function CheckoutForm() {
 
   async function processPayment(e) {
     e.preventDefault();
-
     if (!stripe || !elements) {
       return;
     }
@@ -27,7 +27,7 @@ function CheckoutForm() {
       const { token } = await stripe.createToken(cardElement);
 
       await dispatch(checkoutCart({cartId: cart.id, paymentInfo: token}));
-
+      navigate('/orders');
     } catch(err) {
       throw err;
     }

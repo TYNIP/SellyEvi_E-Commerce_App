@@ -68,15 +68,6 @@ const LoginForm = (props) => {
                 error && <div>{error}</div>
               }
               <Button variant="contained" color="primary" type="submit" isLoading={isLoading}>Submit</Button>
-              {/* <p>Forgotten your password?</p>
-              <Divider />
-              <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
-                <p>Sign in with</p>
-              </div>
-              <div className="social-btn-container">
-                <Button variant="contained" className="facebook-btn">Facebook</Button>
-                <Button variant="contained" className="google-btn">Google</Button>
-              </div> */}
             </Form>
           </Formik>
   );

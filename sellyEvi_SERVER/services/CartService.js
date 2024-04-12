@@ -60,11 +60,21 @@ module.exports = class CartService {
             throw err;
         };
     };
-
-    //Remove cart item line by  Id
-    async removeItem(cartItemId){
+    //remove single item
+    async removeItem(id, cartItemId){
         try{
-            const cartItem = await CartItemModel.delete(cartItemId);
+            const cart = await CartModel.findOneByUserId(id);
+            const cartItem = await CartItemModel.deleteItem(cartItemId, cart.id);
+            return cartItem;
+        } catch(err){
+            throw err;
+        };
+    };
+
+    //Remove all cart items
+    async removeAllItems(cartId){
+        try{
+            const cartItem = await CartItemModel.deleteAllItemsByCartId(cartId);
             return cartItem;
 
         } catch(err){
@@ -72,10 +82,23 @@ module.exports = class CartService {
         };
     };
 
-    //Update cart item by id
-    async updateitem(cartItemId, data){
+    //Remove all cart items
+    async removeCart(cartId){
         try{
-            const cartItem = await CartItemModel.update(cartItemId, data);
+            const cartItem = await CartModel.deleteCart(cartId);
+            return cartItem;
+        } catch(err){
+            throw err;
+        };
+    };
+
+    //Update cart item by id
+    async updateItem(id, cartItemId, qty){
+        try{
+            const cart = await CartModel.findOneByUserId(id);
+            const items = await CartItemModel.findOneByCartId(cartItemId, cart.id);
+            const itemData = {quantity: qty};
+            const cartItem = await CartItemModel.update(items.id, itemData);
             return cartItem;
 
         } catch(err){
@@ -90,7 +113,6 @@ module.exports = class CartService {
         try{
             const cartItem = await CartItemModel.update(cartItemId, data);
             return cartItem;
-
         } catch(err){
             throw err;
         };

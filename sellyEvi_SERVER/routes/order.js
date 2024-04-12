@@ -10,7 +10,7 @@ module.exports = (app) =>{
     //Get user orders
     router.get('/', async (req, res, next) =>{
         try{
-            const {id} = req.user;
+            const {id} = req.session.user;
             const response = await OrderServiceInstance.list(id);
             res.status(200).send(response);
 
@@ -22,7 +22,7 @@ module.exports = (app) =>{
     //Find user order
     router.get('/:orderId', async (req, res, next) =>{
         try{
-            const {orderId} = req.params.orderId;
+            const orderId = req.params.orderId;
             const response = await OrderServiceInstance.findById(orderId);
             res.status(200).send(response);
         } catch(err){

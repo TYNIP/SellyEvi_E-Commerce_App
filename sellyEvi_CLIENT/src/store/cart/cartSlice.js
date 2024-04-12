@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import { checkLoginStatus } from '../auth/authSlice';
-import {createCart, addToCart, checkout, fetchCart, removeFromCart } from '../../apis/cart';
+import {createCart, addToCart, checkout, updateCart, removeFromCart } from '../../apis/cart';
 
 /* FUNCTIONS */
 export const createItem = createAsyncThunk(
   'cart/createItem',
   async ({product}) => {
     try {
-      console.log(product);
       await createCart(product.id);
       return;
     } catch(err) {
@@ -32,41 +31,33 @@ export const checkoutCart = createAsyncThunk(
   'cart/checkoutCart',
   async ({ cartId, paymentInfo }, thunkAPI) => {
     try {
-      console.log('cartId', paymentInfo)
-      console.log('paymentInfo', paymentInfo)
       const response = await checkout(cartId, paymentInfo);
-      console.log('the payment response', response);
-      return {
-        order: response
-      }
+      return response;
     } catch(err) {
       throw err;
     }
   }
 );
 
-export const loadCart = createAsyncThunk(
-  'cart/loadCart',
-  async (params, thunkAPI) => {
-    try {
-      const response = await fetchCart();
-      return {
-        cart: response
-      }
-    } catch(err) {
-      throw err;
-    }
-  }
-);
 
 export const removeItem = createAsyncThunk(
   'cart/removeItem',
   async (cartItemId, thunkAPI) => {
     try {
       await removeFromCart(cartItemId);
-      return {
-        item: cartItemId
-      }
+      return;
+    } catch(err) {
+      throw err;
+    }
+  }
+);
+
+export const updateItem = createAsyncThunk(
+  'cart/updateItem',
+  async ({cartItemId, qty}, thunkAPI) => {
+    try {
+      await updateCart(cartItemId, qty);
+      return;
     } catch(err) {
       throw err;
     }
@@ -99,15 +90,15 @@ const cartSlice = createSlice({
         Object.assign(state, cart);
       })
       .addCase(checkoutCart.fulfilled, (state, action) => {
-        
-      })
-      .addCase(loadCart.fulfilled, (state, action) => {
-        const { cart } = action.payload;
-        Object.assign(state, cart);
+        const {status} = action.payload;
+        state.status = true;
+        state.message = status;
       })
       .addCase(removeItem.fulfilled, (state, action) => {
-        const { item } = action.payload;
-        state.items = state.items.filter((product) => product.cartItemId !== item);
+
+      })
+      .addCase(updateItem.fulfilled, (state, action) => {
+
       })
   }
 });

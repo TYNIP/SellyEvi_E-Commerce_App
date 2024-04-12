@@ -1,16 +1,18 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const session = require('express-session');
 const LocalStrategy = require('passport-local');
 const AuthService = require('../services/AuthService');
 const AuthServiceInstance = new AuthService();
 const UserModel= require('../models/users');
 const UserModelInstance = new UserModel();
-const { GOOGLE } = require('../config');
+const {SESSION_SECRET, GOOGLE } = require('../config');
 
 /* API AUTH MANAGEMENT */
 
 module.exports = (app)=>{
     console.log('passport running');
+
     app.use(passport.initialize());
     app.use(passport.session());
 

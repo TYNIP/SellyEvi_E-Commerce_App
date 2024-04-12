@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -9,11 +9,11 @@ import { checkLoginStatus} from '../../store/auth/authSlice';
 import './Cart.css';
 
 function Cart() {
-
-  let { items } = useSelector(state => state.cart);
-  console.log(items);
+  const [err, setErr] = useState(false);
+  const cart = useSelector(state => state.auth.userinfo.cart);
+  const items = useSelector(state => state.auth.userinfo.cart.items);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     async function isLoggedIn() {
       await dispatch(checkLoginStatus());
@@ -21,14 +21,27 @@ function Cart() {
     isLoggedIn();
   }, [dispatch]);
 
+  function handleError(){
+    setErr(true);
+  }
   function calculateTotal() {
     return items.reduce((accumulator, currentValue) => Number(accumulator.total) + Number(currentValue.total));
   };
+  let bridge;
+  if(cart.length !== 0 && items === undefined){
+    bridge = false;
+  } else if (cart.length !== 0 && items.length === 0) {
+    bridge = false;
+  } else {
+    bridge = true;
+  }
 
-  if(items.length !== 0){
+  if(cart.length !== 0 && bridge){
     return (
       <section className="cart-details-container">
+        <Link to='/orders' className='btnact' style={{textAlign: 'right'}}><p>Orders</p></Link>
         <p style={{fontSize: 40, color: 'black'}}>Cart</p>
+        <Link>Orders</Link>
         <div className="cart-info-container">
           {/* CART INFORMATION */}
           <table class="custom-table tableFinal" >
@@ -59,6 +72,7 @@ function Cart() {
               )
             })
           }
+
       </table>
   
         </div>
@@ -75,7 +89,8 @@ function Cart() {
                 <Typography>Cart Id: {`${items[0].cart_id}`}</Typography>
               </div>
               <div className="order-line-item">
-                <Typography>Subtotal: {calculateTotal()} USD</Typography>
+                {items.length === 1 && (<Typography>Subtotal: {items[0].total} USD</Typography>)}
+                {items.length > 1 && (<Typography>Subtotal: {calculateTotal()} USD</Typography>)}
               </div>
               <div className="order-line-item">
                 <Typography>Shipping: FREE</Typography>
@@ -84,7 +99,8 @@ function Cart() {
               <Divider className="checkout-divider"/>
               <br/>
               <div className="order-line-item">
-                <Typography>Total: {calculateTotal()} USD</Typography>
+                {items.length === 1 && (<Typography>Total: {items[0].total} USD</Typography>)}
+                {items.length > 1 && (<Typography>Total: {calculateTotal()} USD</Typography>)}
               </div>
             </div>
           </div>
@@ -103,7 +119,8 @@ function Cart() {
   }else{
     return (
       <section className="cart-details-container">
-        <p style={{fontSize: 40, color: 'black'}}>Cart</p>
+        <Link to='/orders' className='btnact' style={{textAlign: 'right'}}><p>Orders</p></Link>
+        <p style={{fontSize: 40, color: 'black', margin: 0}}>Cart</p>
         <div className="cart-info-container">
           {/* CART INFORMATION */}
           <table class="custom-table tableFinal" >
@@ -153,6 +170,7 @@ function Cart() {
               <div className="order-line-item">
                 <Typography>Total: 0</Typography>
               </div>
+              {err && (<div className='error'><p>No Products For Checkout</p></div>)}
             </div>
           </div>
         </div>
@@ -161,9 +179,9 @@ function Cart() {
               variant="contained"
               color="primary"
               className="checkout-btn"
-              component={Link}
-              to="/checkout"
-            >Checkout</Button>
+              onClick={handleError}
+            >Checkout
+            </Button>
           </div>
       </section>
     );

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const session = require('express-session');
 const AuthService = require('../services/AuthService');
 const AuthServiceInstance = new AuthService();
 const CartService = require('../services/CartService');
@@ -57,7 +57,7 @@ module.exports = (app, passport) =>{
     router.get('/logged_in', async(req, res, next)=>{
         try{
             console.log('status log in retreive')
-            console.log(req.session.user);
+            console.log(req.session);
             const {id} = req.session.user;
             console.log(id);
             const cart = await CartServiceInstance.loadCart(id);
@@ -75,11 +75,8 @@ module.exports = (app, passport) =>{
         }
     });
     //Log Out Users
-    router.post('/logout', function(req, res, next){
+    router.get('/logout', function(req, res, next){
         req.session.destroy();
-        req.logout(function(err) {
-          if (err) { return next(err); }
-          res.redirect('/login');
-        });
+        req.logout();
       });
 }

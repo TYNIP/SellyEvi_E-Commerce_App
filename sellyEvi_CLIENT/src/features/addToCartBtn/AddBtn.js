@@ -34,15 +34,12 @@ export default function AddCartBtn({product}){
       /* ADD ITEM */
       async function handleAddToCart() {
         if(isAuthenticated){
-          console.log('firt')
           await dispatch(createItem({product}));
-          console.log('second')
           await dispatch(addItem({product, quantity}));
           setValid(true)
           setTimeout(()=>{
             setValid(false);
           }, 4000);
-          console.log('api done');
         } else {
           navigate('/login');
         }

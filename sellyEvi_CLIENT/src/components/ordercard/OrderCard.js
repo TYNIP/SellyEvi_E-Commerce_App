@@ -1,49 +1,42 @@
 import React from 'react';
-import Button from '@mui/material/Button';
+import { useNavigate} from 'react-router-dom';
+import { useDispatch} from 'react-redux';
 import Moment from 'react-moment';
-import Divider from '@mui/material/Divider';
-
+import { loadOrder} from '../../store/orders/ordersSlice';
 import './OrderCard.css';
 
 const OrderCard = (props) => {
-
-  const { created, id, total } = props;
+  const navigate = useNavigate();
+  const { created, id, total, status } = props;
+  const dispatch = useDispatch();
+  async function fetchOrder(){
+    await dispatch(loadOrder(id));
+    navigate(`/orders/${id}`);
+  }
 
   return (
     <div className="order-card-container">
-      <div className="order-card-header">
-        <div className="order-card-header-row">
-          <p className="order-card-header-title top">Order Placed</p>
-          <p className="order-card-header-title top">Total</p>
-          <p className="order-card-header-title top">Policy Sent To</p>
-          <p className="order-card-header-title top">{`Order # ${id}`}</p>
+      <div className='order-card-container-row1'> 
+        <div className='order-card-container-name'>
+          <i className="fas fa fa-shopping-cart fa-fw" ></i>
+          <h3>{`Order # ${id}`}</h3>
         </div>
-        <div className="order-card-header-row">
-          <p className="order-card-header-title bottom">
-            <Moment format="LL">{created}</Moment>
-          </p>
-          <p className="order-card-header-title bottom">{`$${total/100}`}</p>
-          <p className="order-card-header-title bottom">thomasbergen15@gmail.com</p>
-          <div className="order-card-action-container">
-            <p className="order-card-header-title bottom">Order Details</p>
-            <Divider orientation="vertical" variant="middle"/>
-            <p className="order-card-header-title bottom">Invoice</p>
-          </div>
+        <div className='moreDetails'>
+          <button onClick={fetchOrder}>More Details</button>
         </div>
       </div>
-      <Divider/>
-      <div className="order-card-content">
-        <img src="https://m.media-amazon.com/images/I/61fTX5TjAEL._UL1001_.jpg" alt="" className="order-card-content-img"/>
-        <div className="order-card-content-info">
-          <p>Product 1</p>
-          <p>{`$${total/100}`}</p>
-        </div>
-        <div className="order-card-content-action-container">
-          <Button variant="contained" color="primary">Buy Again</Button>
-        </div>
+      <div className='order-card-container-row2'>
+      <table className='custom-table'>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Total</th>
+        <tr>
+            <td>{status}</td>
+            <td><Moment format="LL">{created}</Moment></td>
+            <td>{`$${total}`}</td>
+        </tr>
+      </table>
       </div>
-      <Divider/>
-      <div className="order-card-footer"></div>
     </div>
   )
 }

@@ -15,7 +15,7 @@ export const login = async (credentials) => {
 // Registering a user
 export const register = async (data) => {
   try {
-    const response = await API.post('auth/register', data);
+    const response = await API.post('auth/register', data, {withCredentials: true});
     return response.data;
   } catch(err) {
     throw err.response.data;
@@ -35,7 +35,7 @@ export const isLoggedIn = async () => {
 // log Out user
 export const logout = async () => {
   try {
-    const response = await API.post('auth/logout');
+    const response = await API.get('auth/logout', {withCredentials: true});
     return response;
   } catch (err) {
     throw err.response.data;
@@ -47,6 +47,5 @@ export const logout = async () => {
 
 export const loginWithGoogle = async () => {
     const response = await API.get('auth/google', {withCredentials: true});
-    console.log('second res', response)
     return response.data;
 }

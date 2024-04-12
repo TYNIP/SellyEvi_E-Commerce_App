@@ -13,7 +13,7 @@ function Checkout() {
       <section id='checkout'>
         <div className='loader'><p>THIS IS NOT A REAL E-COMMERSE APP. SO NO CHARGE WILL BE DONE NEITHER YOUR ACCOUNT INFROMATION WILL BE STORED </p></div>
         <br/>
-        <div className='  error'><p>FOR SECURITY MEASURES DO NOT ADD REAL ACCOUNT INFORMATION </p></div>
+        <div className='  error'><p>FOR SECURITY MEASURES DO NOT ADD REAL   ACCOUNT INFORMATION </p></div>
         <CheckoutForm />
       </section>
     </Elements>

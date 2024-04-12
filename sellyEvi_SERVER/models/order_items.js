@@ -1,6 +1,6 @@
 const db = require('../db/index');
 const { DateTime } = require('luxon');
-const pgp = require('pg-promise');
+const pgp = require('pg-promise')({capSQL: true});
 
 /* Model for order_items table */
 
@@ -12,15 +12,11 @@ module.exports = class OrderItemModel {
        * @return {Object|null} [Created order item]
        */
       static async createOrderItems(data){
-        console.log("hola2?");
         try{
-            console.log('order item creating wua', data);
-            const statement = pgp.helpers.insert(data, null, 'order_items');
-            console.log('the final statement', statement);
+            const statement = pgp.helpers.insert(data, ['quantity', 'order_id', 'product_id', 'price' ], 'order_items') + 'RETURNING *';
             await db.query(statement);
-            return 'Order Added Successfully';
+            return 'Successful Checkout | Order Created';
         } catch(err){
-            console.log('como que otro error ahhhh', err);
             throw new Error(err);
         }
     };
@@ -30,16 +26,15 @@ module.exports = class OrderItemModel {
        * @param {Object} orderId [Order id]
        * @return {Array} [Created cart item]
       */
-     static async find(orderId){
+     static async findOrders(orderId){
         try{
             const statement = `SELECT oi.quantity, oi.id AS "cartItemId", p.* FROM order_items AS oi
-            INNER JOIN products AS p ON p.id = oi.productId
+            INNER JOIN products AS p ON p.id = oi.product_id
             WHERE order_id = $1`;
             const queryParams = [orderId];
             const result = await db.query(statement, queryParams);
-
             if(result.rows?.length){
-                return result.rows[0];
+                return result.rows;
             } else {
                 return null;
             };

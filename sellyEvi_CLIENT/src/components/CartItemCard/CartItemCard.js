@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Incrementer from '../incrementer/Incrementer';
-import { removeItem } from '../../store/cart/cartSlice';
+import { removeItem, updateItem } from '../../store/cart/cartSlice';
 import {convertImageBufferToUrl} from '../../apis/functions';
+import { checkLoginStatus} from '../../store/auth/authSlice';
 import './CartItemCard.css';
 
 function CartItemCard(props) {
   const products = props;
-  console.log('the product',products);
   const { cartItemId, name, price, quantity, total, id, images} = props;
   const [ qty, setQty ] = useState(quantity);
   const [edit, setEdit] = useState(false);
@@ -18,7 +18,6 @@ function CartItemCard(props) {
 
 
   const dispatch = useDispatch();
-  console.log();
 
   /* image */
   useEffect(() => {
@@ -46,8 +45,19 @@ function CartItemCard(props) {
     setEdit(!edit);
   }
 
-  async function remove() {
-    await dispatch(removeItem(cartItemId));
+  async function update() {
+    if(qty===quantity){
+      setEdit(!edit);
+    }else{
+      await dispatch(updateItem({cartItemId: products.id, qty: qty}));
+      await dispatch(checkLoginStatus());
+      setEdit(!edit);
+    }
+  }
+  async function deleteProduct(){
+    await dispatch(removeItem(products.id));
+    await dispatch(checkLoginStatus());
+    setEdit(!edit);
   }
 
   return (
@@ -93,8 +103,16 @@ function CartItemCard(props) {
                 variant="contained"
                 color="primary"
                 className="checkout-btn"
-                onClick={remove}
+                onClick={update}
               >Save Changes</Button>
+            </div>
+            <div className='thefinalbutton'>
+              <Button
+                variant="contained"
+                color="primary"
+                className="checkout-btn"
+                onClick={deleteProduct}
+              >Delete Product</Button>
             </div>
             </>
           )}

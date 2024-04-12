@@ -9,7 +9,7 @@ function Account({userInfo}) {
         <h2>Profile</h2>
         <p>Your account information</p>
         <div className='ai2'>
-        <table class="custom-table">
+        <table className="custom-table">
         <tr>
             <td>First Name:</td>
             <td>{`${userInfo.user.firstname}`}</td>
@@ -30,7 +30,7 @@ function Account({userInfo}) {
             <td>User Created:</td>
             <td>{`${userInfo.user.created}`}</td>
         </tr>
-    </table>
+        </table>
         </div>
         <Link to='/cart' className='btnact'>Check your Cart</Link>
         <br/>

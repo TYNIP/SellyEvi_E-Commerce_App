@@ -14,7 +14,6 @@ module.exports = class UserModel {
         try{
             const statement = pgp.helpers.insert(data, null, 'users') + 'RETURNING *';
             const result = await db.query(statement);
-
             if(result.rows?.length){
                 return result.rows[0];
             } else {

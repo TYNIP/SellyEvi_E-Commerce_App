@@ -49,9 +49,10 @@ module.exports = (app)=> {
     //Update item from user cart
     router.put('/cart/items/:cartItemId', async(req, res, next) => {
         try{
-            const {cartItemId} = req.params.cartItemId;
-            const data = req.body;
-            const response = await CartServiceInstance.updateItem(cartItemId, data);
+            const {id} = req.session.user;
+            const {cartItemId} = req.params;
+            const {qty} = req.body;
+            const response = await CartServiceInstance.updateItem(id, cartItemId, qty);
             res.status(200).send(response);
 
         } catch(err){
@@ -62,8 +63,9 @@ module.exports = (app)=> {
     //Delete item from user cart
     router.delete('/cart/items/:cartItemId', async(req, res, next) =>{
         try{
-            const {cartItemId} = req.params.cartItemId;
-            const response = await CartServiceInstance.removeItem(cartItemId);
+            const {id} = req.session.user;
+            const {cartItemId} = req.params;
+            const response = await CartServiceInstance.removeItem(id, cartItemId);
             res.status(200).send(response);
             
         } catch(err){
@@ -74,14 +76,13 @@ module.exports = (app)=> {
     //Checkout user cart
     router.post('/cart/checkout', async(req, res, next) =>{
         try{
-            console.log('checok out in process')
             const {id} = req.session.user;
             const {cartId} = req.body;
-            console.log(id);
-            console.log(cartId);
-            const response = await OrderServiceInstance.create(id, cartId);
-            res.status(200).send(response);
-
+            const resStatus = await OrderServiceInstance.create(id, cartId);
+            await CartServiceInstance.removeAllItems(cartId);
+            const cartStatus = await CartServiceInstance.removeCart(cartId);
+            const response = `${resStatus}. ${cartStatus}`;
+            res.status(200).send({status:response});
         } catch(err){
             next(err);
         };

@@ -62,7 +62,6 @@ export const logoutUser = createAsyncThunk(
   'auth/logoutUser',
   async () => {
     try {
-      console.log('running for out')
       await logout();
       return {
         isAuthenticated: false

@@ -13,8 +13,6 @@ export const fetchCart = async () => {
 // Add a product to a user's cart
 export const createCart = async (productId) => {
   try {
-    console.log('the endpoint create ahhh');
-    console.log(productId);
     const response = await API.post(`carts/cart`, { product_id: productId}, {withCredentials: true});
     return response.data;
   } catch(err) {
@@ -33,7 +31,17 @@ export const addToCart = async (productId, productPrice, quantity) => {
 // Removing a product from a user's cart
 export const removeFromCart = async (cartItemId) => {
   try {
-    const response = await API.delete(`carts/cart/items/${cartItemId}`);
+    const response = await API.delete(`carts/cart/items/${cartItemId}`, {withCredentials: true});
+    return response.data;
+  } catch(err) {
+    throw err.response.data;
+  }
+}
+
+// Removing a product from a user's cart
+export const updateCart = async (cartItemId, qty) => {
+  try {
+    const response = await API.put(`carts/cart/items/${cartItemId}`, {qty}, {withCredentials: true});
     return response.data;
   } catch(err) {
     throw err.response.data;

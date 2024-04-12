@@ -65,7 +65,6 @@ function App() {
       <Route path="products/search" element={<SearchPage/>}/>
       <Route path="login" element={isAuthenticated? <Navigate to="/home"/> : <Login/>}/>
       <Route path="register" element={<Register/>}/>
-      <Route path="orders" element={<Orders/>}/>
       
       {/* PRIVATE ROUTES */}
       <Route exact path='/account' element={isAuthenticated? <Account userInfo={userInfo}/> : <Navigate to="/login"/>}/>
