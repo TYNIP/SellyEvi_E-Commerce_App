@@ -8,11 +8,11 @@ module.exports = {
       process.env.LOCAL_SERVER_API
     ]),
     DB: {
-        PGHOST : process.env.PGHOST,
-        PGUSER: process.env.PGUSER,
-        PGDATABASE: process.env.PGDATABASE,
-        PGPASSWORD: process.env.PGPASSWORD,
-        PGPORT: process.env.PGPORT
+        PGHOST : (process.env.NODE_ENV === 'production' ? process.env.PGHOSTREMOTE : process.env.PGHOSTLOCAL),
+        PGUSER: (process.env.NODE_ENV === 'production' ? process.env.PGUSERREMOTE : process.env.PGUSERLOCAL),
+        PGDATABASE: (process.env.NODE_ENV === 'production' ? process.env.PGDATABASEREMOTE : process.env.PGDATABASELOCAL),
+        PGPASSWORD: (process.env.NODE_ENV === 'production' ? process.env.PGPASSWORDREMOTE : process.env.PGPASSWORDLOCAL),
+        PGPORT: (process.env.NODE_ENV === 'production' ? process.env.PGPORTREMOTE : process.env.PGPORTLOCAL),
     },
     FACEBOOK: {
         CALLBACK_URL: (process.env.NODE_ENV === 'production' ? process.env.REMOTE_FACEBOOK_CALLBACK_URL : process.env.LOCAL_FACEBOOK_CALLBACK_URL),
