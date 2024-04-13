@@ -12,6 +12,7 @@ Website: **[SellyEvi]()**
 - **[Client-Side README](./sellyEvi_CLIENT/README.md)**
 
 ## Considerations
+- **SERVER RESTARTS EVERY 90 DAYS**
 - Project with academic and practical purposes.
 - Not Related to any organisation or person.
 - Fictional application.

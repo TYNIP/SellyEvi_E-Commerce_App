@@ -3,6 +3,7 @@ dotenv.config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session)
 const helmet = require('helmet');
 const compression = require('compression');
 const {SESSION_SECRET, allowedDomains} = require('../config');
@@ -22,7 +23,10 @@ module.exports = (app) =>{
             secure: process.env.NODE_ENV === 'production',
             sameSite: "lax",
             maxAge: 24 * 60 * 60 * 1000
-            }
+            },
+            store: new MemoryStore({
+                checkPeriod: 24 * 60 * 60 * 1000 
+              }),
         })
     );
 
