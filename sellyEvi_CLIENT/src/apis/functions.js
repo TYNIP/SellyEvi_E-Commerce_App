@@ -25,5 +25,5 @@ function convertPostgreSQLTimestamp(postgresTimestamp) {
 }
 
 /* EXPORTS */
-const API_URL = isLocalHost ? "http://localhost:4000" : "https://sellyeviapi.artmoram.com";
+const API_URL = isLocalHost ? "http://localhost:4000" : "https://sellyevi-e-commerce-app.onrender.com/";
 export {API_URL, convertImageBufferToUrl, convertPostgreSQLTimestamp}; 

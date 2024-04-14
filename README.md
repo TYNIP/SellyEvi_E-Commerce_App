@@ -5,7 +5,7 @@ Selly Evi, Selling Sily Things Since The Eve.
 
 Full Stack PERN App. 
 
-Website: **[SellyEvi]()**
+Website: **[SellyEvi](https://sellyevi.netlify.app/home)**
 
 **More information:**
 - **[Server-Side README](./sellyEvi_SERVER/README.md)**

@@ -12,3 +12,9 @@
     color: rgba(0,0,0,0.6);
     background-color: white;
 }
+
+@media only screen and (max-width: 800px){
+    #footer *{
+        font-size: 0.7rem;
+    }
+}

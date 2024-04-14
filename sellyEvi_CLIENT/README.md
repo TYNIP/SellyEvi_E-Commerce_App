@@ -1,6 +1,6 @@
 # CLIENT - SellyEvi | E-commerce APP
 Client Side of Selly Evi e-commerce application.
-
+- Website: **[SellyEvi](https://sellyevi.netlify.app/home)**
 - **[SERVER - SellyEvi](../sellyEvi_SERVER/README.md)**
 
 ## Client Side
