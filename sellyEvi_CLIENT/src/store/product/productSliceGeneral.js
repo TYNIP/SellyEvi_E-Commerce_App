@@ -22,7 +22,7 @@ export const fetchLatestProducts = createAsyncThunk(
       throw new Error('Failed to fetch latest products');
     }
     const data = await response.json();
-    const latestProducts = data.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate)).slice(0, 4);
+    const latestProducts = data.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate)).slice(0, 3);
     return latestProducts;
   }
 );
