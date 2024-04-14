@@ -1,7 +1,7 @@
 # SellyEvi | E-commerce APP
 ***FICTIONAL APP***
 
-Selly Evi, Selling Sily Things Since The Eve.
+Selly Evi, Selling Silly Things Since The Eve.
 
 Full Stack PERN App. 
 
