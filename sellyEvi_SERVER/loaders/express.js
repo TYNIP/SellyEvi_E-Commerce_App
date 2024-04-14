@@ -18,10 +18,11 @@ module.exports = (app) =>{
         session({  
           secret: SESSION_SECRET,
           resave: false,
-          saveUninitialized: true,
+          saveUninitialized: false,
           cookie: {
             secure: process.env.NODE_ENV === 'production',
-            sameSite: "lax",
+            sameSite: process.env.NODE_ENV === 'PROD' ? 'none' : 'lax',
+            httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000
             },
             store: new MemoryStore({
