@@ -4,7 +4,7 @@ Backend of Selly Evi e-commerce application.
 **SERVER RESTARTS EVERY 90 DAYS**
 
 - **[CLIENT - SellyEvi](../sellyEvi_CLIENT/README.md)**
-- **[API DOCUMENTATION](../sellyEvi_CLIENT/README.md)**
+- **[API DOCUMENTATION](https://sellyevi-e-commerce-app.onrender.com/docs/)**
 
 ## API Structure
 
