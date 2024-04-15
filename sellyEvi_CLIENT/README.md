@@ -12,10 +12,10 @@ Client Side of Selly Evi e-commerce application.
 - **Product Management**: Users can view the list of available products and product details.
 
 ## Technologies
-- **React:** 
-- **Redux:** 
-- **React Router:** 
-- **Redux Toolkit:** 
+- **React** 
+- **Redux** 
+- **React Router** 
+- **Redux Toolkit** 
 - **yup**
 - **formik**
 - **js-cookie**
